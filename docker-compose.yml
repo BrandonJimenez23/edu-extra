@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:15
+    container_name: eduextra_db
+    environment:
+      POSTGRES_DB: eduextra
+      POSTGRES_USER: eduextra_user
+      POSTGRES_PASSWORD: eduextra_pass
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - eduextra_network
+
+  backend:
+    build:
+      context: ./backend/eduextra-api
+    container_name: eduextra_backend
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/eduextra
+      SPRING_DATASOURCE_USERNAME: eduextra_user
+      SPRING_DATASOURCE_PASSWORD: eduextra_pass
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    networks:
+      - eduextra_network
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: eduextra_frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+    networks:
+      - eduextra_network
+
+volumes:
+  postgres_data:
+
+networks:
+  eduextra_network:
