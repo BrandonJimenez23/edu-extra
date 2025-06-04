@@ -1,0 +1,30 @@
+/* Sizes */
+.table-sm td,
+.table-sm th {
+  @apply px-2 py-1 text-sm;
+}
+
+.table-md td,
+.table-md th {
+  @apply px-4 py-2 text-base;
+}
+
+.table-lg td,
+.table-lg th {
+  @apply px-6 py-3 text-lg;
+}
+
+/* Behaviors */
+.table-hover tbody tr:hover {
+  @apply bg-gray-100;
+}
+
+.table-bordered th,
+.table-bordered td {
+  @apply border border-gray-300;
+}
+
+/* Row alternation */
+.table-zebra tbody tr:nth-child(even) {
+  @apply bg-emerald-100;
+}

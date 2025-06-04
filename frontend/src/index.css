@@ -1,3 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* General reset */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -5,20 +10,9 @@
 }
 
 body {
-  margin: 0 5%; /* Margen del 5% en el eje X */
-  font-family: 'Arial', sans-serif; /* Fuente predeterminada */
-  line-height: 1.6; /* Altura de línea para mejor legibilidad */
-  background-color: #f9f9f9; /* Fondo claro */
-  color: #333; /* Color de texto predeterminado */
+  @apply font-sans text-base bg-gray-50 text-gray-800 leading-relaxed;
 }
 
 :root {
-  
+  --header-height: 64px;
 }
-
-/* src/index.css */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-

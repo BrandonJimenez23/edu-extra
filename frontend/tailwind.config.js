@@ -4,17 +4,16 @@ export default {
 		extend: {
 			colors: {
 				"blue-ribbon": {
-					50: "#eff4ff",
-					100: "#dbe6fe",
-					200: "#bfd3fe",
-					300: "#93b4fd",
-					400: "#6090fa",
-					500: "#3b76f6",
-					600: "#2563eb",
-					700: "#1d58d8",
-					800: "#1e4baf",
-					900: "#1e408a",
-					950: "#172a54",
+					50: "#eff6ff", // Muy claro
+					100: "#dbeafe",
+					200: "#bfdbfe",
+					300: "#93c5fd",
+					400: "#60a5fa",
+					500: "#3b82f6", // Base
+					600: "#2563eb", // Hover
+					700: "#1d4ed8", // Active
+					800: "#1e40af", // Más oscuro
+					900: "#1e3a8a", // Muy oscuro
 				},
 				emerald: {
 					50: "#ecfdf5",
@@ -54,6 +53,19 @@ export default {
 					800: "#9f1239",
 					900: "#881337",
 					950: "#4c0519",
+				},
+				dark: "#333333",
+				neutral: {
+					50: "#f9fafb",
+					100: "#f3f4f6",
+					200: "#e5e7eb",
+					300: "#d1d5db",
+					400: "#9ca3af",
+					500: "#6b7280",
+					600: "#4b5563",
+					700: "#374151",
+					800: "#1f2937",
+					900: "#111827",
 				},
 			},
 			fontFamily: {

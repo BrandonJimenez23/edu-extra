@@ -1,0 +1,62 @@
+/* Reusable buttons */
+.btn {
+  @apply inline-flex items-center justify-center font-medium rounded-md px-4 py-2 transition-colors duration-200;
+}
+
+/* Button variants */
+.btn-primary {
+  @apply bg-blue-ribbon-600 text-white hover:bg-blue-ribbon-700 active:bg-blue-ribbon-800;
+}
+
+.btn-primary-ghost {
+  @apply bg-white text-blue-ribbon-600 hover:bg-blue-ribbon-50 active:bg-blue-ribbon-100 border border-blue-ribbon-600;
+}
+
+.btn-secondary {
+  @apply bg-emerald-600 text-white hover:bg-emerald-700 active:bg-emerald-800;
+}
+
+.btn-secondary-ghost {
+  @apply bg-white text-emerald-600 hover:bg-emerald-50 active:bg-emerald-100 border border-emerald-600;
+}
+
+.btn-warning {
+  @apply bg-sunglow-600 text-white hover:bg-sunglow-700 active:bg-sunglow-800;
+}
+
+.btn-warning-ghost {
+  @apply bg-white text-sunglow-600 hover:bg-sunglow-50 active:bg-sunglow-100 border border-sunglow-600;
+}
+
+.btn-danger {
+  @apply bg-coral-red-600 text-white hover:bg-coral-red-700 active:bg-coral-red-800;
+}
+
+.btn-danger-ghost {
+  @apply bg-white text-coral-red-600 hover:bg-coral-red-50 active:bg-coral-red-100 border border-coral-red-600;
+}
+
+.btn-outline {
+  @apply bg-transparent border border-gray-300 text-gray-700 hover:bg-gray-100 active:bg-gray-200;
+}
+
+.btn-disabled {
+  @apply opacity-50 cursor-not-allowed;
+}
+
+.input {
+  @apply border border-gray-300 rounded px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-ribbon-500;
+}
+
+.card {
+  @apply bg-white shadow-lg rounded-lg p-4 border border-neutral-200;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.card:hover {
+  @apply shadow-xl transform scale-105;
+}
+
+.title {
+  @apply text-2xl font-heading text-dark;
+}

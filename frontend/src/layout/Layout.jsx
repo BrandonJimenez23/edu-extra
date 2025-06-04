@@ -12,11 +12,11 @@ export default function Layout({ children }) {
             </header>
 
             {/* Navigation */}
-            <nav className="bg-gray-100 py-2">
+            <nav className="bg-blue-ribbon-400 py-2">
                 <ul className="flex justify-center space-x-6">
-                    <li><a href="/" className="text-gray-700 hover:text-blue-500">Home</a></li>
-                    <li><a href="/users" className="text-gray-700 hover:text-blue-500">Users</a></li>
-                    <li><a href="/about" className="text-gray-700 hover:text-blue-500">About</a></li>
+                    <li><a href="/" className="text-white font-heading hover:text-blue-ribbon-700">Home</a></li>
+                    <li><a href="/users" className="text-white font-heading hover:text-blue-ribbon-700">Users</a></li>
+                    <li><a href="/about" className="text-white font-heading hover:text-blue-ribbon-700">About</a></li>
                 </ul>
             </nav>
 
