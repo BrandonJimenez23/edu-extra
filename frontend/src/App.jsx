@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import UserList from './pages/UserList';
+import UserList from './features/users/pages/UserList';
 import Layout from './layout/Layout';
 
 function App() {
