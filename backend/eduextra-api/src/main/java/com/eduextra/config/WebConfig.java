@@ -16,8 +16,11 @@ public class WebConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         
-        // Allow the frontend domain
-        config.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        // Allow the frontend domain and Swagger UI
+        config.setAllowedOrigins(Arrays.asList(
+            "http://localhost:5173", 
+            "http://localhost:8080"
+        ));
         
         // Allow common HTTP methods
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));

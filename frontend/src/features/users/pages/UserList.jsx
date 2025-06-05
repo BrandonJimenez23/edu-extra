@@ -20,7 +20,7 @@ const UserList = () => {
             }
         };
         loadUsers();
-    }, [fetchUsers]);
+    }, []);
 
 
     const seedMockUsers = async () => {
@@ -49,7 +49,7 @@ const UserList = () => {
                     onClick={() => navigate('/user-form')} 
                     variant="primary"
                 >
-                    Crear Usuario
+                    Create new User
                 </Button>
             </div>
 

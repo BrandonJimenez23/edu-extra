@@ -6,7 +6,7 @@ export default function Select({
     value,
     onChange,
     options = [],
-    placeholder = 'Seleccionar...',
+    placeholder = 'Select..',
     className = '',
     disabled = false,
     error = '',
