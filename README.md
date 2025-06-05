@@ -28,48 +28,58 @@ This platform acts as a hybrid between an **ERP system** and a **public-facing e
 
 ---
 
-## 📊 Estado del Proyecto
+## 📊 Project Status
 
 ### Frontend
-- ✅ Estructura base de carpetas por features
-- ✅ Componentes UI reutilizables (Button, Table)
-- ✅ Módulo básico de usuarios
-- ✅ Integración con API
-- ⏳ Autenticación y control de acceso
-- ⏳ Formularios con validación
+- ✅ Feature-based folder structure
+- ✅ Reusable UI components (Button, Table, Card, Input, Select)
+- ✅ Design system with component showcase
+- ✅ Semantic HTML structure and accessibility
+- ✅ Basic users module with table view
+- ✅ API integration
+- ✅ Icons system with Lucide React
+- ⏳ Forms with validation
+- ⏳ Authentication and access control
 
 ### Backend
-- ✅ Estructura por dominios
-- ✅ API RESTful para usuarios
-- ✅ Configuración CORS
-- ✅ Documentación OpenAPI/Swagger
-- ⏳ Implementación completa de seguridad
-- ⏳ API para actividades e inscripciones
+- ✅ Domain-driven structure
+- ✅ RESTful API for users
+- ✅ CORS configuration
+- ✅ OpenAPI/Swagger documentation
+- ✅ Comprehensive exception handling
+- ✅ Detailed validation error responses
+- ⏳ Complete security implementation
+- ⏳ API for activities and enrollments
 
 ---
 
 ## 🗂️ Project Structure
 
-```
+```plaintext
 edu-extra/
 ├── backend/                # Java Spring Boot API
-│   ├── eduextra-api/       # API principal
-│   │   ├── src/            # Código fuente
-│   │   │   ├── main/       # Código de la aplicación
-│   │   │   └── test/       # Pruebas
-│   │   ├── pom.xml         # Dependencias Maven
-│   │   └── Dockerfile      # Configuración Docker
+│   ├── eduextra-api/       # Main API
+│   │   ├── src/            # Source code
+│   │   │   ├── main/       # Application code
+│   │   │   └── test/       # Tests
+│   │   ├── pom.xml         # Maven dependencies
+│   │   └── Dockerfile      # Docker configuration
 ├── frontend/               # React + Vite app
-│   ├── src/                # Código fuente
-│   │   ├── api/            # Configuración de API
-│   │   ├── components/     # Componentes reutilizables
-│   │   ├── features/       # Módulos por dominio
-│   │   ├── hooks/          # Hooks personalizados
-│   │   └── styles/         # Estilos CSS
-│   ├── package.json        # Dependencias npm
-│   └── Dockerfile          # Configuración Docker
-├── docker-compose.yml      # Configuración de contenedores
-└── README.md               # Este archivo
+│   ├── src/                # Source code
+│   │   ├── api/            # API configuration
+│   │   ├── components/     # Reusable components
+│   │   │   ├── layouts/    # Layout components
+│   │   │   └── ui/         # UI components
+│   │   ├── constants/      # Application constants
+│   │   ├── features/       # Domain modules
+│   │   ├── hooks/          # Custom hooks
+│   │   ├── layout/         # Main layout
+│   │   ├── pages/          # Page components
+│   │   └── styles/         # CSS styles
+│   ├── package.json        # npm dependencies
+│   └── Dockerfile          # Docker configuration
+├── docker-compose.yml      # Container configuration
+└── README.md               # This file
 ```
 
 ---

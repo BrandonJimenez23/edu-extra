@@ -8,24 +8,36 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
+
 import com.eduextra.exception.ErrorResponse;
 
+/**
+ * REST controller for managing users.
+ * Implements RESTful principles with standardized responses and proper HTTP status codes.
+ * 
+ * Note: This API uses direct response pattern instead of response envelope pattern
+ * for simplicity and clarity. All error responses follow a consistent ErrorResponse format.
+ * 
+ * Security: All endpoints require JWT Bearer authentication.
+ */
+
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/users")
 @Tag(name = "User Management", description = "Operations related to user management")
+@SecurityRequirement(name = "Bearer Authentication")
+@RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
-
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
 
     @Operation(
         summary = "Enable a user",
@@ -37,6 +49,7 @@ public class UserController {
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}/enable")
     public ResponseEntity<Void> enableUser(@PathVariable Long id) {
         userService.enableUser(id, true);
@@ -53,6 +66,7 @@ public class UserController {
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{id}/disable")
     public ResponseEntity<Void> disableUser(@PathVariable Long id) {
         userService.enableUser(id, false);
@@ -71,6 +85,7 @@ public class UserController {
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
         // @Valid ya se encarga de validar el DTO y lanzar MethodArgumentNotValidException si hay errores
@@ -126,22 +141,6 @@ public class UserController {
     }
 
     @Operation(
-        summary = "Delete user",
-        description = "Deletes (or deactivates) a user identified by their ID. This action is irreversible.",
-        tags = {"User Management"},
-        responses = {
-            @ApiResponse(responseCode = "204", description = "User deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "User not found", 
-                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
-        }
-    )
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
-        userService.permanentlyDeleteUser(id);
-        return ResponseEntity.noContent().build();
-    }
-
-    @Operation(
         summary = "Permanently delete a user",
         description = "Deletes a user permanently from the system identified by their ID. This action is irreversible.",
         tags = {"User Management"},
@@ -151,6 +150,7 @@ public class UserController {
                 content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/{id}/permanent")
     public ResponseEntity<Void> permanentlyDeleteUser(@PathVariable Long id) {
         userService.permanentlyDeleteUser(id);

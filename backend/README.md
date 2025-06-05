@@ -1,104 +1,134 @@
 # EduExtra Backend (Spring Boot)
 
-## 🧱 Tecnologías Utilizadas
+## 🧱 Technologies Used
 
-- **Java 17+**: Versión de Java utilizada para el desarrollo
-- **Spring Boot 3**: Framework para desarrollo de aplicaciones Java
-- **Spring Security**: Manejo de autenticación y autorización
-- **Spring Data JPA**: Para acceso y manipulación de datos
-- **PostgreSQL**: Base de datos relacional
-- **Hibernate**: ORM para mapeo objeto-relacional
-- **Lombok**: Reducción de código boilerplate
-- **Swagger/OpenAPI**: Documentación automática de la API
-- **JUnit 5 & Mockito**: Testing unitario e integración
+- **Java 17+**: Java version used for development
+- **Spring Boot 3**: Framework for Java application development
+- **Spring Security**: Authentication and authorization management
+- **Spring Data JPA**: For data access and manipulation
+- **PostgreSQL**: Relational database
+- **Hibernate**: ORM for object-relational mapping
+- **Lombok**: Reduction of boilerplate code
+- **Swagger/OpenAPI**: Automatic API documentation
+- **JUnit 5 & Mockito**: Unit and integration testing
 
-## 📦 Estructura de Carpetas
+## 📦 Folder Structure
 
-```
+```plaintext
 eduextra-api/
 ├── src/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/eduextra/
-│   │   │       ├── activity/       # Módulo de actividades
+│   │   │       ├── activity/       # Activities module
 │   │   │       │   ├── controller/
 │   │   │       │   ├── dto/
 │   │   │       │   ├── model/
 │   │   │       │   ├── repository/
 │   │   │       │   └── service/
-│   │   │       ├── config/         # Configuraciones de la aplicación
-│   │   │       ├── enrollment/     # Módulo de inscripciones
-│   │   │       ├── exception/      # Manejo de excepciones centralizado
-│   │   │       ├── shared/         # Componentes compartidos
-│   │   │       └── user/           # Módulo de usuarios
+│   │   │       ├── config/         # Application configuration
+│   │   │       ├── enrollment/     # Enrollments module
+│   │   │       ├── exception/      # Centralized exception handling
+│   │   │       ├── shared/         # Shared components
+│   │   │       └── user/           # Users module
 │   │   │           ├── controller/
 │   │   │           ├── dto/
 │   │   │           ├── model/
 │   │   │           ├── repository/
 │   │   │           └── service/
 │   │   └── resources/
-│   │       ├── application.properties      # Propiedades principales
-│   │       ├── application-dev.properties  # Propiedades de desarrollo
-│   │       └── application-prod.properties # Propiedades de producción
-│   └── test/                      # Pruebas unitarias e integración
+│   │       ├── application.properties      # Main properties
+│   │       ├── application-dev.properties  # Development properties
+│   │       └── application-prod.properties # Production properties
+│   └── test/                      # Unit and integration tests
 │       └── java/
 │           └── com/eduextra/
-├── pom.xml                        # Dependencias Maven
-└── Dockerfile                     # Configuración para Docker
+├── pom.xml                        # Maven dependencies
+└── Dockerfile                     # Docker configuration
 ```
 
-## 🚀 Características
+## 🚀 Features
 
-- **Arquitectura por Dominios**: Separación clara por módulos
-- **API RESTful**: Endpoints bien definidos con métodos HTTP estándar
-- **Seguridad**: Autenticación con JWT
-- **Validación de Datos**: Validación automática de DTOs
-- **Manejo de Excepciones**: Sistema centralizado para excepciones
-- **Documentación**: API documentada con Swagger/OpenAPI
-- **Perfiles de Ejecución**: Configuraciones separadas para dev/prod
-- **Sistema de Roles**: Control de acceso basado en roles (RBAC)
+- **Domain-Driven Architecture**: Clear separation by modules
+- **RESTful API**: Well-defined endpoints with standard HTTP methods
+- **Security**: JWT authentication
+- **Data Validation**: Automatic DTO validation
+- **Exception Handling**: Centralized exception handling system
+- **Standardized Responses**: Consistent error responses with validation details
+- **API Documentation**: Comprehensive documentation with Swagger/OpenAPI
+- **Execution Profiles**: Separate configurations for dev/prod
+- **Role System**: Role-based access control (RBAC)
 
-## ✅ Checklist de Progreso
+## ✅ Progress Checklist
 
-### Configuración Inicial
-- [x] Estructura del proyecto
-- [x] Configuración de base de datos
-- [x] Configuración CORS
-- [x] Configuración de Swagger/OpenAPI
+### Initial Setup
 
-### Módulo de Usuarios
-- [x] Modelo y entidades
-- [x] Repositorio y servicio
-- [x] Endpoints CRUD
-- [x] DTOs de request/response
-- [x] Habilitar/deshabilitar usuario
-- [ ] Recuperación de contraseña
+- [x] Project structure
+- [x] Database configuration
+- [x] CORS configuration
+- [x] Swagger/OpenAPI configuration
 
-### Seguridad
-- [ ] Implementación de autenticación JWT
-- [ ] Configuración de Spring Security
-- [ ] Encriptación de contraseñas
-- [ ] Control de roles y permisos
+### Users Module
 
-### Módulo de Actividades
-- [ ] Modelo y entidades
-- [ ] Repositorio y servicio
-- [ ] Endpoints CRUD
-- [ ] Asignación de usuarios
+- [x] Model and entities
+- [x] Repository and service
+- [x] CRUD endpoints
+- [x] Request/response DTOs
+- [x] Enable/disable user
+- [x] Improved exception handling
+- [x] Form validation with detailed error responses
+- [ ] Password recovery
 
-### Módulo de Inscripciones
-- [ ] Modelo y entidades
-- [ ] Repositorio y servicio
-- [ ] Endpoints CRUD
-- [ ] Lógica de inscripción/cancelación
+### Security
 
-### Pruebas
-- [ ] Tests unitarios de servicios
-- [ ] Tests de integración para endpoints
-- [ ] Tests de seguridad
+- [ ] JWT authentication implementation
+- [ ] Spring Security configuration
+- [ ] Password encryption
+- [ ] Role and permission control
 
-### Despliegue
-- [x] Configuración de Docker
+### Activities Module
+
+- [ ] Model and entities
+- [ ] Repository and service
+- [ ] CRUD endpoints
+- [ ] User assignment
+
+### Enrollments Module
+
+- [ ] Model and entities
+- [ ] Repository and service
+- [ ] CRUD endpoints
+- [ ] Enrollment/cancellation logic
+
+### API Documentation
+
+- [x] Setup Swagger/OpenAPI
+- [x] Document API endpoints
+- [x] Include error responses in documentation
+- [x] Standardized error handling with validation details
+- [ ] Add examples for requests/responses
+- [ ] Improve model documentation
+
+### API Design Patterns
+
+- [x] RESTful resource-based routing
+- [x] Proper HTTP status codes usage
+- [x] Standardized error responses
+- [x] DTOs for request/response separation
+- [ ] Response envelope pattern (considered but not implemented for simplicity)
+- [ ] HATEOAS links
+
+### Tests
+
+- [ ] Service unit tests
+- [ ] Endpoint integration tests
+- [ ] Security tests
+
+### Deployment
+
+- [x] Docker configuration 
+- [ ] CI/CD pipeline integration
+- [ ] Production environment setup
 - [ ] Pipeline CI/CD
 - [ ] Scripts de migración de base de datos
 - [ ] Documentación para despliegue

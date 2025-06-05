@@ -2,21 +2,19 @@ package com.eduextra.exception;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.util.HashMap;
-import java.util.Map;
-
-@Schema(description = "Respuesta estándar para errores en la API")
+import java.util.Map;    @Schema(description = "Standard API error response")
 public class ErrorResponse {
 
-    @Schema(example = "404", description = "Código de estado HTTP")
+    @Schema(example = "404", description = "HTTP status code")
     private final int statusCode;
 
-    @Schema(example = "El usuario no fue encontrado", description = "Mensaje explicativo del error")
+    @Schema(example = "User not found", description = "Explanatory error message")
     private final String message;
 
-    @Schema(example = "/users/5", description = "Ruta de la petición que causó el error")
+    @Schema(example = "/users/5", description = "Request path that caused the error")
     private final String path;
     
-    @Schema(description = "Errores de validación detallados por campo")
+    @Schema(description = "Detailed validation errors by field")
     private Map<String, String> validationErrors;
 
     public ErrorResponse(int statusCode, String message, String path) {

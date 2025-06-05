@@ -1,13 +1,14 @@
 # EduExtra Frontend
 
-## 🧱 Tecnologías Utilizadas
+## 🧱 Technologies Used
 
-- **React**: Biblioteca de JavaScript para construir interfaces de usuario
-- **Vite**: Herramienta de desarrollo rápida para aplicaciones React
-- **TailwindCSS**: Framework CSS utilitario para diseño rápido y consistente
-- **Axios**: Cliente HTTP para realizar peticiones a la API
-- **React Router**: Navegación entre componentes
-- **ESLint/Prettier**: Herramientas de linting y formato de código
+- **React**: JavaScript library for building user interfaces
+- **Vite**: Fast development tool for React applications
+- **TailwindCSS**: Utility-first CSS framework for rapid and consistent design
+- **Axios**: HTTP client for making API requests
+- **React Router**: Navigation between components
+- **ESLint/Prettier**: Code linting and formatting tools
+- **Lucide React**: Icon library for modern UI components
 
 ## 📦 Estructura de Carpetas
 
@@ -47,55 +48,88 @@ frontend/
 - **Estilos Personalizados**: Componentes con variantes (primary, secondary, etc.)
 - **Tablas Dinámicas**: Con soporte para bordes, hover, zebra, y diferentes tamaños
 
-## ✅ Checklist de Progreso
+## ✅ Progress Checklist
 
-### Configuración Inicial
-- [x] Configurar proyecto con Vite
-- [x] Integrar TailwindCSS
-- [x] Configurar rutas con React Router
-- [x] Configurar Axios para llamadas a la API
+### Initial Setup
 
-### Componentes Base
-- [x] Botones reutilizables con variantes
-- [x] Tabla reutilizable con opciones de personalización
-- [ ] Formularios reutilizables con validación
-- [ ] Modales y notificaciones
+- [x] Configure project with Vite
+- [x] Integrate TailwindCSS
+- [x] Configure routes with React Router
+- [x] Configure Axios for API calls
 
-### Módulo de Usuarios
-- [x] Lista de usuarios
-- [x] Tabla de usuarios
-- [ ] Formulario de creación/edición
-- [ ] Validación de formularios
-- [ ] Eliminación con confirmación
+### Base Components
 
-### Módulo de Actividades
-- [x] Estructura de componentes básicos
-- [ ] Lista de actividades
-- [ ] Formulario de creación/edición
-- [ ] Asignación de usuarios a actividades
+- [x] Reusable buttons with variants (primary, secondary, etc.)
+- [x] Reusable table with customization options
+- [x] Reusable forms with layout components
+- [x] Logo component with variants (light, dark, neutral)
+- [x] Card component
+- [x] Input and Label components
+- [x] Select component
+- [ ] Modals and notifications
 
-### Autenticación
-- [ ] Login/Registro
-- [ ] Protección de rutas
-- [ ] Manejo de tokens JWT
+### User Module
+
+- [x] User list
+- [x] User table
+- [x] User form basic structure
+- [ ] Create/edit form with validation
+- [ ] User deletion with confirmation
+
+### Design System
+
+- [x] Design system showcase page
+- [x] Component library documentation
+- [x] Consistent color schemes and dimensions
+- [x] Icon system with Lucide React
+- [ ] Component variation documentation
+
+### Activities Module
+
+- [x] Basic component structure
+- [ ] Activities list
+- [ ] Create/edit form
+- [ ] User assignment to activities
+
+### Authentication
+
+- [ ] Login/Registration
+- [ ] Route protection
+- [ ] JWT token management
 
 ### UX/UI
-- [x] Diseño responsivo
-- [x] Tema consistente
-- [ ] Modo oscuro/claro
-- [ ] Animaciones y transiciones
 
-## 🧪 Pruebas y Despliegue
-- [ ] Tests unitarios
-- [ ] Tests de integración
-- [ ] Configuración para producción
-- [ ] Despliegue automático
+- [x] Responsive design
+- [x] Consistent theme
+- [x] Semantic HTML structure
+- [x] Accessible components
+- [ ] Dark/light mode
+- [ ] Animations and transitions
 
-Currently, two official plugins are available:
+### Testing and Deployment
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [ ] Unit tests
+- [ ] Integration tests
+- [ ] Production configuration
+- [ ] Automatic deployment
 
-## Expanding the ESLint configuration
+## 📝 Future Enhancements
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Component Library
+
+- [ ] Create a storybook documentation for components
+- [ ] Implement error boundary components
+- [ ] Create skeleton loaders for data fetching states
+- [ ] Add form validation library integration
+
+### Performance Optimization
+
+- [ ] Implement code splitting for larger modules
+- [ ] Add React.memo for performance-critical components
+- [ ] Set up bundle analysis tools
+
+### Developer Experience
+
+- [ ] Add TypeScript integration
+- [ ] Set up Husky for Git hooks
+- [ ] Configure unit tests with React Testing Library
