@@ -5,8 +5,11 @@ import com.eduextra.user.dto.UserResponseDTO;
 import com.eduextra.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import jakarta.validation.Valid;
+import com.eduextra.exception.ErrorResponse;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +31,8 @@ public class UserController {
         tags = {"User Management"},
         responses = {
             @ApiResponse(responseCode = "204", description = "User enabled successfully"),
-            @ApiResponse(responseCode = "404", description = "User not found")
+            @ApiResponse(responseCode = "404", description = "User not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
     @PatchMapping("/{id}/enable")
@@ -43,7 +47,8 @@ public class UserController {
         tags = {"User Management"},
         responses = {
             @ApiResponse(responseCode = "204", description = "User disabled successfully"),
-            @ApiResponse(responseCode = "404", description = "User not found")
+            @ApiResponse(responseCode = "404", description = "User not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
     @PatchMapping("/{id}/disable")
@@ -58,18 +63,27 @@ public class UserController {
         tags = {"User Management"},
         responses = {
             @ApiResponse(responseCode = "200", description = "User created successfully"),
-            @ApiResponse(responseCode = "400", description = "Validation error")
+            @ApiResponse(responseCode = "400", description = "Validation error", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "409", description = "Email already exists", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
     @PostMapping
     public ResponseEntity<UserResponseDTO> createUser(@Valid @RequestBody UserRequestDTO userRequestDTO) {
+        // @Valid ya se encarga de validar el DTO y lanzar MethodArgumentNotValidException si hay errores
         return ResponseEntity.ok(userService.createUser(userRequestDTO));
     }
 
     @Operation(
         summary = "Get user by ID",
         description = "Fetches a user by their unique ID. Returns the user's details if found.",
-        tags = {"User Management"}
+        tags = {"User Management"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "User found successfully"),
+            @ApiResponse(responseCode = "404", description = "User not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+        }
     )
     @GetMapping("/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id) {
@@ -79,7 +93,10 @@ public class UserController {
     @Operation(
         summary = "Get all users",
         description = "Retrieves a list of all registered users in the system.",
-        tags = {"User Management"}
+        tags = {"User Management"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Users retrieved successfully")
+        }
     )
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
@@ -92,8 +109,12 @@ public class UserController {
         tags = {"User Management"},
         responses = {
             @ApiResponse(responseCode = "200", description = "User updated successfully"),
-            @ApiResponse(responseCode = "404", description = "User not found"),
-            @ApiResponse(responseCode = "400", description = "Validation error")
+            @ApiResponse(responseCode = "404", description = "User not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Validation error", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "409", description = "Email already exists", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
     @PutMapping("/{id}")
@@ -108,7 +129,8 @@ public class UserController {
         tags = {"User Management"},
         responses = {
             @ApiResponse(responseCode = "204", description = "User deleted successfully"),
-            @ApiResponse(responseCode = "404", description = "User not found")
+            @ApiResponse(responseCode = "404", description = "User not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
         }
     )
     @DeleteMapping("/{id}")
@@ -120,7 +142,12 @@ public class UserController {
     @Operation(
         summary = "Permanently delete a user",
         description = "Deletes a user permanently from the system identified by their ID. This action is irreversible.",
-        tags = {"User Management"}
+        tags = {"User Management"},
+        responses = {
+            @ApiResponse(responseCode = "204", description = "User permanently deleted"),
+            @ApiResponse(responseCode = "404", description = "User not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+        }
     )
     @DeleteMapping("/{id}/permanent")
     public ResponseEntity<Void> permanentlyDeleteUser(@PathVariable Long id) {
