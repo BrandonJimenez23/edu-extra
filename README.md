@@ -32,24 +32,53 @@ This platform acts as a hybrid between an **ERP system** and a **public-facing e
 
 ### Frontend
 - ✅ Feature-based folder structure
-- ✅ Reusable UI components (Button, Table, Card, Input, Select)
+- ✅ Reusable UI components (Button, Table, Card, Input, Select, Logo)
 - ✅ Design system with component showcase
 - ✅ Semantic HTML structure and accessibility
 - ✅ Basic users module with table view
-- ✅ API integration
+- ✅ API integration with Axios
 - ✅ Icons system with Lucide React
+- ✅ Main layout with responsive sidebar and topbar
+- ✅ Route system with protected routes
+- ✅ Dashboard with statistics and quick actions
+- ✅ Activities management page
+- ✅ User menu with dropdown functionality
+- ✅ Search functionality in header
+- ✅ Mobile-responsive design
+- ✅ Custom color palette and typography (Poppins + Inter)
 - ⏳ Forms with validation
-- ⏳ Authentication and access control
+- ⏳ Authentication integration
+- ⏳ Real-time notifications
+- ⏳ Dark/light theme toggle
 
 ### Backend
 - ✅ Domain-driven structure
-- ✅ RESTful API for users
+- ✅ RESTful API for users with pagination
 - ✅ CORS configuration
 - ✅ OpenAPI/Swagger documentation
 - ✅ Comprehensive exception handling
 - ✅ Detailed validation error responses
-- ⏳ Complete security implementation
+- ✅ JWT Authentication and Authorization
+- ✅ Spring Security configuration
+- ✅ Refresh token system
+- ✅ Custom UserDetailsService
+- ✅ Security filters and middleware
 - ⏳ API for activities and enrollments
+- ⏳ Role-based access control endpoints
+- ⏳ File upload functionality
+- ⏳ Email notifications
+- ⏳ Database optimizations
+
+---
+
+### DevOps & Infrastructure
+- ✅ Docker configuration for all services
+- ✅ Docker Compose orchestration
+- ✅ PostgreSQL database setup
+- ⏳ CI/CD pipeline with GitHub Actions
+- ⏳ Production deployment configuration
+- ⏳ Environment-specific configurations
+- ⏳ Health checks and monitoring
 
 ---
 
@@ -84,15 +113,58 @@ edu-extra/
 
 ---
 
-## 🐳 Run the Project with Docker
+## 🐳 Getting Started
 
+### Prerequisites
+- Docker and Docker Compose
+- Git
+
+### Quick Start
 ```bash
+# Clone the repository
+git clone <repository-url>
+cd edu-extra
+
+# Start all services
 docker compose up --build
+
+# Access the applications
+# Frontend: http://localhost:5173
+# Backend API: http://localhost:8080
+# API Documentation: http://localhost:8080/swagger-ui.html
+# PostgreSQL: localhost:5433
 ```
 
-- **Backend**: [http://localhost:8080](http://localhost:8080)
-- **Frontend**: [http://localhost:5173](http://localhost:5173)
-- **PostgreSQL**: localhost:5433 (external access)
+### Development Setup
+```bash
+# Frontend development
+cd frontend
+npm install
+npm run dev
+
+# Backend development  
+cd backend/eduextra-api
+./mvnw spring-boot:run
+```
+
+---
+
+## 📚 Documentation
+
+- **API Documentation**: [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)
+- **Frontend Components**: Available at `/design-system` route
+- **Backend README**: [backend/README.md](backend/README.md)
+- **Frontend README**: [frontend/README.md](frontend/README.md)
+
+---
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ---
 

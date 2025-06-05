@@ -1,18 +1,22 @@
-# EduExtra Backend (Spring Boot)
+# EduExtra Backend API
+
+Spring Boot REST API for managing extracurricular activities with JWT authentication, role-based access control, and comprehensive documentation.
 
 ## 🧱 Technologies Used
 
-- **Java 17+**: Java version used for development
-- **Spring Boot 3**: Framework for Java application development
-- **Spring Security**: Authentication and authorization management
-- **Spring Data JPA**: For data access and manipulation
-- **PostgreSQL**: Relational database
-- **Hibernate**: ORM for object-relational mapping
-- **Lombok**: Reduction of boilerplate code
-- **Swagger/OpenAPI**: Automatic API documentation
-- **JUnit 5 & Mockito**: Unit and integration testing
+- **Java 17**: Modern Java version with enhanced features
+- **Spring Boot 3**: Enterprise-grade framework for Java applications
+- **Spring Security 6**: Advanced authentication and authorization
+- **Spring Data JPA**: Simplified data access layer
+- **PostgreSQL**: Robust relational database
+- **Hibernate**: Advanced ORM with optimizations
+- **Lombok**: Reduced boilerplate code
+- **Swagger/OpenAPI 3**: Interactive API documentation
+- **Maven**: Dependency management and build automation
+- **JUnit 5 & Mockito**: Testing framework and mocking
+- **Docker**: Containerization support
 
-## 📦 Folder Structure
+## 📦 Project Structure
 
 ```plaintext
 eduextra-api/
@@ -20,115 +24,209 @@ eduextra-api/
 │   ├── main/
 │   │   ├── java/
 │   │   │   └── com/eduextra/
-│   │   │       ├── activity/       # Activities module
-│   │   │       │   ├── controller/
-│   │   │       │   ├── dto/
-│   │   │       │   ├── model/
-│   │   │       │   ├── repository/
-│   │   │       │   └── service/
-│   │   │       ├── config/         # Application configuration
-│   │   │       ├── enrollment/     # Enrollments module
-│   │   │       ├── exception/      # Centralized exception handling
-│   │   │       ├── shared/         # Shared components
-│   │   │       └── user/           # Users module
-│   │   │           ├── controller/
-│   │   │           ├── dto/
-│   │   │           ├── model/
-│   │   │           ├── repository/
-│   │   │           └── service/
+│   │   │       ├── activity/           # Activities domain
+│   │   │       │   ├── controller/     # REST endpoints
+│   │   │       │   ├── dto/           # Data transfer objects
+│   │   │       │   ├── model/         # JPA entities
+│   │   │       │   ├── repository/    # Data access layer
+│   │   │       │   └── service/       # Business logic
+│   │   │       ├── auth/              # Authentication module
+│   │   │       │   ├── controller/    # Auth endpoints
+│   │   │       │   ├── dto/          # Auth DTOs
+│   │   │       │   └── service/      # Auth services
+│   │   │       ├── common/            # Shared components
+│   │   │       │   ├── dto/          # Common DTOs
+│   │   │       │   └── exception/    # Exception handling
+│   │   │       ├── config/            # Configuration classes
+│   │   │       ├── enrollment/        # Enrollments domain
+│   │   │       ├── security/          # Security configuration
+│   │   │       │   ├── CustomUserDetailsService.java
+│   │   │       │   ├── JwtAuthenticationFilter.java
+│   │   │       │   ├── JwtService.java
+│   │   │       │   └── SecurityConfig.java
+│   │   │       └── user/              # Users domain
+│   │   │           ├── controller/    # User REST endpoints
+│   │   │           ├── dto/          # User DTOs
+│   │   │           ├── model/        # User entities
+│   │   │           ├── repository/   # User data access
+│   │   │           └── service/      # User business logic
 │   │   └── resources/
-│   │       ├── application.properties      # Main properties
-│   │       ├── application-dev.properties  # Development properties
-│   │       └── application-prod.properties # Production properties
-│   └── test/                      # Unit and integration tests
+│   │       ├── application.properties        # Main configuration
+│   │       ├── application-dev.properties    # Development config
+│   │       ├── application-prod.properties   # Production config
+│   │       └── application-test.properties   # Testing config
+│   └── test/                        # Test suites
 │       └── java/
 │           └── com/eduextra/
-├── pom.xml                        # Maven dependencies
-└── Dockerfile                     # Docker configuration
+├── target/                          # Compiled artifacts
+├── pom.xml                         # Maven configuration
+└── Dockerfile                      # Container configuration
 ```
 
-## 🚀 Features
+## 🚀 Key Features
 
-- **Domain-Driven Architecture**: Clear separation by modules
-- **RESTful API**: Well-defined endpoints with standard HTTP methods
-- **Security**: JWT authentication
-- **Data Validation**: Automatic DTO validation
-- **Exception Handling**: Centralized exception handling system
-- **Standardized Responses**: Consistent error responses with validation details
-- **API Documentation**: Comprehensive documentation with Swagger/OpenAPI
-- **Execution Profiles**: Separate configurations for dev/prod
-- **Role System**: Role-based access control (RBAC)
+- **Domain-Driven Architecture**: Clean separation of concerns by business domains
+- **RESTful API Design**: Standard HTTP methods with proper status codes
+- **JWT Authentication**: Secure token-based authentication with refresh tokens
+- **Role-Based Access Control**: Granular permission system
+- **Data Validation**: Comprehensive DTO validation with detailed error responses
+- **Exception Handling**: Centralized error handling with standardized responses
+- **API Documentation**: Interactive Swagger/OpenAPI documentation
+- **Pagination Support**: Efficient data pagination with filtering
+- **Environment Profiles**: Separate configurations for dev/test/prod
+- **Security First**: Spring Security integration with JWT filters
 
-## ✅ Progress Checklist
+## ✅ Implementation Status
 
-### Initial Setup
+### Infrastructure & Setup
+- [x] Project structure with domain-driven design
+- [x] PostgreSQL database integration
+- [x] CORS configuration for frontend integration
+- [x] Swagger/OpenAPI 3 documentation setup
+- [x] Docker containerization
+- [x] Environment-specific configurations
+- [x] Maven build configuration
 
-- [x] Project structure
-- [x] Database configuration
-- [x] CORS configuration
-- [x] Swagger/OpenAPI configuration
+### Security Implementation
+- [x] JWT token generation and validation
+- [x] Spring Security configuration
+- [x] JWT authentication filter
+- [x] Custom UserDetailsService
+- [x] Refresh token system (7-day expiration)
+- [x] Password encryption with BCrypt
+- [x] Security context management
+- [ ] Role-based endpoint protection
+- [ ] API rate limiting
+- [ ] Security audit logging
 
 ### Users Module
-
-- [x] Model and entities
-- [x] Repository and service
-- [x] CRUD endpoints
+- [x] User entity with JPA annotations
+- [x] User repository with custom queries
+- [x] User service with business logic
+- [x] CRUD REST endpoints
+- [x] User registration and authentication
 - [x] Request/response DTOs
-- [x] Enable/disable user
-- [x] Improved exception handling
-- [x] Form validation with detailed error responses
-- [ ] Password recovery
+- [x] User enable/disable functionality
+- [x] Pagination support with filtering
+- [x] Comprehensive validation
+- [ ] Password recovery system
+- [ ] User profile image upload
+- [ ] User activity logging
 
-### Security
+### Authentication System
+- [x] User registration endpoint
+- [x] User login with JWT generation
+- [x] Refresh token endpoint
+- [x] Token validation middleware
+- [x] Authentication DTOs (LoginRequest, AuthResponse)
+- [x] Custom authentication service
+- [ ] Password reset flow
+- [ ] Email verification
+- [ ] Two-factor authentication
 
-- [ ] JWT authentication implementation
-- [ ] Spring Security configuration
-- [ ] Password encryption
-- [ ] Role and permission control
-
-### Activities Module
-
-- [ ] Model and entities
-- [ ] Repository and service
-- [ ] CRUD endpoints
-- [ ] User assignment
-
-### Enrollments Module
-
-- [ ] Model and entities
-- [ ] Repository and service
-- [ ] CRUD endpoints
-- [ ] Enrollment/cancellation logic
+### Data Management
+- [x] Generic pagination DTO (PagedResponseDTO)
+- [x] Standardized error responses
+- [x] Validation error details
+- [x] Custom exception handling
+- [x] Database constraints and indexes
+- [ ] Database migration scripts
+- [ ] Data seeding for development
+- [ ] Backup and recovery procedures
 
 ### API Documentation
+- [x] Swagger/OpenAPI configuration
+- [x] Endpoint documentation with examples
+- [x] Error response documentation
+- [x] Security scheme documentation
+- [x] DTO schema documentation
+- [ ] API versioning strategy
+- [ ] Comprehensive request/response examples
+- [ ] Performance considerations documentation
 
-- [x] Setup Swagger/OpenAPI
-- [x] Document API endpoints
-- [x] Include error responses in documentation
-- [x] Standardized error handling with validation details
-- [ ] Add examples for requests/responses
-- [ ] Improve model documentation
+### Activities Module
+- [ ] Activity entity design
+- [ ] Activity repository and service
+- [ ] Activity CRUD endpoints
+- [ ] Activity categories and tags
+- [ ] Capacity management
+- [ ] Schedule management
 
-### API Design Patterns
+### Enrollments Module
+- [ ] Enrollment entity relationships
+- [ ] Enrollment business logic
+- [ ] Enrollment/cancellation endpoints
+- [ ] Waitlist management
+- [ ] Enrollment notifications
 
-- [x] RESTful resource-based routing
-- [x] Proper HTTP status codes usage
-- [x] Standardized error responses
-- [x] DTOs for request/response separation
-- [ ] Response envelope pattern (considered but not implemented for simplicity)
-- [ ] HATEOAS links
+### Testing & Quality
+- [x] Basic integration tests
+- [x] User controller tests
+- [ ] Service layer unit tests
+- [ ] Security integration tests
+- [ ] Database integration tests
+- [ ] API contract testing
 
-### Tests
-
-- [ ] Service unit tests
-- [ ] Endpoint integration tests
-- [ ] Security tests
-
-### Deployment
-
-- [x] Docker configuration 
-- [ ] CI/CD pipeline integration
+### DevOps & Deployment
+- [x] Docker configuration
+- [x] Multi-stage Dockerfile
+- [x] Docker Compose integration
+- [ ] CI/CD pipeline configuration
 - [ ] Production environment setup
-- [ ] Pipeline CI/CD
-- [ ] Scripts de migración de base de datos
-- [ ] Documentación para despliegue
+- [ ] Database migration automation
+- [ ] Health check endpoints
+- [ ] Monitoring and logging
+
+## 🔐 Security Features
+
+### JWT Implementation
+- **Access Tokens**: Short-lived (15 minutes) for API access
+- **Refresh Tokens**: Long-lived (7 days) for token renewal
+- **Token Validation**: Signature verification and expiration checks
+- **Security Context**: Automatic user context from valid tokens
+
+### Authentication Flow
+1. User credentials → Login endpoint
+2. Credentials validation → JWT generation
+3. Access token + Refresh token returned
+4. Access token in Authorization header
+5. Token validation on protected endpoints
+6. Refresh token for access token renewal
+
+## 📊 API Endpoints Overview
+
+### Authentication
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User authentication
+- `POST /auth/refresh-token` - Token renewal
+
+### Users Management
+- `GET /users` - List all users
+- `GET /users/paginated` - Paginated user list with filters
+- `GET /users/{id}` - Get user by ID
+- `POST /users` - Create new user
+- `PUT /users/{id}` - Update user
+- `PATCH /users/{id}/toggle-status` - Enable/disable user
+- `DELETE /users/{id}` - Delete user
+
+### Documentation
+- `GET /swagger-ui.html` - Interactive API documentation
+- `GET /v3/api-docs` - OpenAPI specification
+
+## 🎯 Next Development Phases
+
+### Phase 1: Core Features Completion
+- Activities management system
+- Enrollment workflow
+- Role-based access control implementation
+
+### Phase 2: Advanced Features
+- File upload functionality
+- Email notification system
+- Advanced search and filtering
+
+### Phase 3: Production Readiness
+- Comprehensive testing suite
+- Performance optimizations
+- Production deployment pipeline
+- Monitoring and alerting
