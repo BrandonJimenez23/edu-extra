@@ -1,34 +1,40 @@
-export default function Layout({ children }) {
-    return (
-        <div className="grid grid-rows-[auto_auto_1fr_auto] min-h-screen">
-            {/* Header */}
-            <header className="flex items-center justify-center ">
-                <img
-                    className="w-24 sm:w-48 md:w-128 h-auto"
-                    src="/EduExtraLogoSlim.png"
-                    alt="Logo"
-                />
+import { Link } from 'react-router-dom';
+import { Logo } from '../components/ui/Logo';
 
+export default function AppLayout({ children }) {
+    return (
+        <div className="grid grid-cols-[250px_1fr] grid-rows-[auto_1fr] min-h-screen">
+            {/* Sidebar */}
+            <aside className="col-span-1 row-span-2 bg-blue-ribbon-500 text-white">
+                <header className="mb-8 shadow-md p-4">
+                    <Logo variant="light" />
+                </header>
+                <nav aria-label="Main Navigation" className="space-y-4 p-4">
+                    <a href="/dashboard" className="block hover:text-blue-200">Dashboard</a>
+                    <a href="/users" className="block hover:text-blue-200">Usuarios</a>
+                    <a href="/activities" className="block hover:text-blue-200">Actividades</a>
+                    <Link to={"design-system"} className="block hover:text-blue-200">Diseño</Link>
+                </nav>
+            </aside>
+
+            {/* Topbar */}
+            <header className="bg-white shadow-md flex justify-between items-center h-16 px-0">
+                <h1 className="text-lg font-heading font-semibold pl-4">Panel de administración</h1>
+                <div className="flex items-center gap-4 pr-4">
+                    <label htmlFor="search" className="sr-only">Buscar</label>
+                    <input id="search" type="search" placeholder="Buscar..." className="border px-2 py-1 rounded" />
+                    <img
+                      src="https://unavatar.io/Kronnoz16"
+                      alt="Avatar"
+                      className="w-8 h-8 rounded-full object-cover"
+                    />
+                </div>
             </header>
 
-            {/* Navigation */}
-            <nav className="bg-blue-ribbon-400 py-2">
-                <ul className="flex justify-center space-x-6">
-                    <li><a href="/" className="text-white font-heading hover:text-blue-ribbon-700">Home</a></li>
-                    <li><a href="/users" className="text-white font-heading hover:text-blue-ribbon-700">Users</a></li>
-                    <li><a href="/about" className="text-white font-heading hover:text-blue-ribbon-700">About</a></li>
-                </ul>
-            </nav>
-
-            {/* Main Content */}
-            <main className="p-4">
+            {/* Main content */}
+            <main className="bg-gray-50 p-6" role="main">
                 {children}
             </main>
-
-            {/* Footer */}
-            <footer className="bg-gray-200 text-center py-4 text-sm text-gray-600">
-                © {new Date().getFullYear()} EDU EXTRA. All rights reserved.
-            </footer>
         </div>
     );
 }

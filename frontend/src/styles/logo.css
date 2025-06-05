@@ -1,0 +1,9 @@
+.logo-light {
+  @apply text-white;
+}
+.logo-dark {
+  @apply text-blue-ribbon-700;
+}
+.logo-neutral {
+  @apply text-neutral-900;
+}

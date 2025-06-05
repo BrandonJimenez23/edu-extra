@@ -1,9 +1,12 @@
 import UserTable from '../components/UserTable';
 import useUsers from '../../../hooks/useUsers';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import Button from '../../../components/ui/Button';
+import { mockUsers } from '../../../constants/mockData';
 
 const UserList = () => {
-
+    const navigate = useNavigate();
     const { addUser, fetchUsers, loading } = useUsers();
     const [users, setUsers] = useState([]);
 
@@ -17,41 +20,8 @@ const UserList = () => {
             }
         };
         loadUsers();
-    }, []);
+    }, [fetchUsers]);
 
-
-    const mockUsers = [
-        {
-            fullName: 'Juan Pérez',
-            email: 'juan.perez@eduextra.com',
-            password: '12345678',
-            role: 'STUDENT',
-        },
-        {
-            fullName: 'Lucía Gómez',
-            email: 'lucia.gomez@eduextra.com',
-            password: '12345678',
-            role: 'COORDINATOR',
-        },
-        {
-            fullName: 'Carlos Ruiz',
-            email: 'carlos.ruiz@eduextra.com',
-            password: '12345678',
-            role: 'MONITOR',
-        },
-        {
-            fullName: 'Ana Morales',
-            email: 'ana.morales@eduextra.com',
-            password: '12345678',
-            role: 'STUDENT',
-        },
-        {
-            fullName: 'Marco Salas',
-            email: 'marco.salas@eduextra.com',
-            password: '12345678',
-            role: 'ADMIN',
-        },
-    ];
 
     const seedMockUsers = async () => {
         for (const user of mockUsers) {
@@ -67,10 +37,22 @@ const UserList = () => {
     return (
         <div className="p-4 space-y-6">
             <h1 className="text-3xl font-heading text-dark">Users Management</h1>
-            <button onClick={seedMockUsers} className="btn btn-primary mb-4"
-                disabled={loading}>
-                {loading ? 'Loading...' : 'Seed Mock Users'}
-            </button>
+            <div className="flex gap-4 mb-4">
+                <Button 
+                    onClick={seedMockUsers} 
+                    variant="secondary"
+                    disabled={loading}
+                >
+                    {loading ? 'Cargando...' : 'Seed Mock Users'}
+                </Button>
+                <Button 
+                    onClick={() => navigate('/user-form')} 
+                    variant="primary"
+                >
+                    Crear Usuario
+                </Button>
+            </div>
+
 
             {/* Compact Table */}
             <UserTable

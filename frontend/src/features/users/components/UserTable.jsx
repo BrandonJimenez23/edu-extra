@@ -1,4 +1,5 @@
 import Table from "../../../components/layouts/Table";
+import { getRoleBadgeClass } from "../../../constants/roles";
 
 export default function UserTable({
     users,
@@ -57,20 +58,4 @@ export default function UserTable({
             {children}
         </Table>
     );
-}
-
-// Función auxiliar para obtener la clase del badge según el rol
-function getRoleBadgeClass(role) {
-    switch (role) {
-        case 'ADMIN':
-            return 'bg-blue-ribbon-100 text-blue-ribbon-800';
-        case 'INSTRUCTOR':
-            return 'bg-emerald-100 text-emerald-800';
-        case 'COORDINATOR':
-            return 'bg-sunglow-100 text-sunglow-800';
-        case 'USER':
-            return 'bg-gray-100 text-gray-800';
-        default:
-            return 'bg-gray-100 text-gray-800';
-    }
 }
