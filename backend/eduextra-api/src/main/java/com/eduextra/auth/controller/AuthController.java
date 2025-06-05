@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.eduextra.auth.dto.AuthResponseDTO;
 import com.eduextra.auth.dto.LoginRequestDTO;
+import com.eduextra.auth.dto.RefreshTokenRequestDTO;
 import com.eduextra.auth.dto.RegisterRequestDTO;
 import com.eduextra.auth.service.AuthService;
 import com.eduextra.exception.ErrorResponse;
@@ -38,7 +39,7 @@ public class AuthController {
     
     @Operation(
         summary = "Register a new user",
-        description = "Creates a new user account in the system with the provided details. Requires a valid email, password, name, and role. Returns a JWT token upon successful registration.",
+        description = "Creates a new user account in the system with the provided details. Requires a valid email, password, name, and role. Returns JWT tokens upon successful registration.",
         tags = {"Authentication"},
         responses = {
             @ApiResponse(responseCode = "200", description = "User registered successfully", 
@@ -56,7 +57,7 @@ public class AuthController {
     
     @Operation(
         summary = "Authenticate user",
-        description = "Authenticates a user with email and password credentials. Returns a JWT token upon successful authentication that can be used for subsequent API requests.",
+        description = "Authenticates a user with email and password credentials. Returns JWT tokens upon successful authentication that can be used for subsequent API requests.",
         tags = {"Authentication"},
         responses = {
             @ApiResponse(responseCode = "200", description = "User authenticated successfully", 
@@ -72,5 +73,23 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody LoginRequestDTO request) {
         return ResponseEntity.ok(authService.login(request));
+    }
+    
+    @Operation(
+        summary = "Refresh access token",
+        description = "Uses a valid refresh token to generate a new access token and refresh token pair. This allows users to maintain their session without re-entering credentials.",
+        tags = {"Authentication"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Tokens refreshed successfully", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = AuthResponseDTO.class))),
+            @ApiResponse(responseCode = "400", description = "Validation error or invalid request data", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "401", description = "Invalid or expired refresh token", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+        }
+    )
+    @PostMapping("/refresh-token")
+    public ResponseEntity<AuthResponseDTO> refreshToken(@Valid @RequestBody RefreshTokenRequestDTO request) {
+        return ResponseEntity.ok(authService.refreshToken(request));
     }
 }

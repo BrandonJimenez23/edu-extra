@@ -1,10 +1,13 @@
 package com.eduextra.user.controller;
 
+import com.eduextra.common.dto.PagedResponseDTO;
 import com.eduextra.user.dto.UserRequestDTO;
 import com.eduextra.user.dto.UserResponseDTO;
+import com.eduextra.user.model.Role;
 import com.eduextra.user.service.UserService;
 
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -118,6 +121,32 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponseDTO>> getAllUsers() {
         return ResponseEntity.ok(userService.getAllUsers());
+    }
+
+    @Operation(
+        summary = "Get users with pagination and filters",
+        description = "Retrieves a paginated list of users with optional filtering by name and role, and sorting options.",
+        tags = {"User Management"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "Users retrieved successfully",
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = PagedResponseDTO.class)))
+        }
+    )
+    @GetMapping("/paginated")
+    public ResponseEntity<PagedResponseDTO<UserResponseDTO>> getAllUsersPaginated(
+            @Parameter(description = "Page number (0-based)", example = "0")
+            @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Number of users per page", example = "20")
+            @RequestParam(defaultValue = "20") int size,
+            @Parameter(description = "Field to sort by", example = "fullName")
+            @RequestParam(defaultValue = "fullName") String sortBy,
+            @Parameter(description = "Sort direction", example = "asc")
+            @RequestParam(defaultValue = "asc") String sortDir,
+            @Parameter(description = "Search term for user names", example = "Juan")
+            @RequestParam(required = false) String search,
+            @Parameter(description = "Filter by user role")
+            @RequestParam(required = false) Role role) {
+        return ResponseEntity.ok(userService.getAllUsers(page, size, sortBy, sortDir, search, role));
     }
 
     @Operation(

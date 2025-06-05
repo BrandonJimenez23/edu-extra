@@ -36,7 +36,10 @@ export default function Form({
             {...props}
         >
             {children}
-            <div className="flex gap-4 mt-6 justify-end">
+            <div className={clsx(
+                "flex gap-4 mt-6 justify-end",
+                columns === 2 && "form-actions"
+            )}>
                 {onReset && (
                     <Button 
                         type="reset" 

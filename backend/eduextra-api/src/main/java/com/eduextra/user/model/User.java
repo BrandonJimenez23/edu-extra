@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class User implements UserDetails {
-    
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -50,6 +50,9 @@ public class User implements UserDetails {
 
     @Builder.Default
     private Boolean isActive = true;
+
+    @Column(nullable = true)
+    private String avatarUrl;
 
     private LocalDateTime createdAt;
 

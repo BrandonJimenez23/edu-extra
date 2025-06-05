@@ -1,5 +1,6 @@
 /* Base styles */
 .form {
+  width: 100%;
 }
 
 .form-single-column {
@@ -12,6 +13,11 @@
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
+  align-items: start;
+}
+
+.form-double-column > .form-actions {
+  grid-column: 1 / -1; /* Span across all columns */
 }
 
 @media (max-width: 768px) {

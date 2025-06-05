@@ -25,6 +25,9 @@ public class JwtService {
     @Value("${application.security.jwt.expiration}")
     private long jwtExpiration;
     
+    @Value("${application.security.jwt.refresh-token.expiration}")
+    private long refreshExpiration;
+    
     /**
      * Extrae el nombre de usuario (email) del token JWT
      */
@@ -54,6 +57,13 @@ public class JwtService {
         return buildToken(extraClaims, userDetails, jwtExpiration);
     }
     
+    /**
+     * Genera un refresh token para un usuario
+     */
+    public String generateRefreshToken(UserDetails userDetails) {
+        return buildToken(new HashMap<>(), userDetails, refreshExpiration);
+    }
+
     private String buildToken(Map<String, Object> extraClaims, UserDetails userDetails, long expiration) {
         return Jwts
                 .builder()
@@ -73,7 +83,10 @@ public class JwtService {
         return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
     }
     
-    private boolean isTokenExpired(String token) {
+    /**
+     * Valida solo si el token no ha expirado (para refresh tokens)
+     */
+    public boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
     
