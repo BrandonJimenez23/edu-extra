@@ -58,34 +58,53 @@ public class AuthService {
     }
     
     public AuthResponseDTO login(LoginRequestDTO loginRequestDTO) {
-        // Autenticar usuario
-        authenticationManager.authenticate(
-            new UsernamePasswordAuthenticationToken(
-                loginRequestDTO.getEmail(),
-                loginRequestDTO.getPassword()
-            )
-        );
+        System.out.println("=== LOGIN ATTEMPT ===");
+        System.out.println("Email: " + loginRequestDTO.getEmail());
         
-        // Buscar usuario
-        User user = userRepository.findByEmail(loginRequestDTO.getEmail())
-            .orElseThrow(() -> new UserNotFoundException("Invalid credentials"));
-        
-        // Verificar que el usuario esté activo
-        if (!user.getIsActive()) {
-            throw new UserNotFoundException("User account is deactivated");
+        try {
+            // Autenticar usuario
+            authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                    loginRequestDTO.getEmail(),
+                    loginRequestDTO.getPassword()
+                )
+            );
+            System.out.println("Authentication successful");
+            
+            // Buscar usuario
+            User user = userRepository.findByEmail(loginRequestDTO.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("Invalid credentials"));
+            
+            System.out.println("User found: " + user.getEmail() + ", Active: " + user.getIsActive());
+            
+            // Verificar que el usuario esté activo
+            if (!user.getIsActive()) {
+                System.out.println("User account is deactivated");
+                throw new UserNotFoundException("User account is deactivated");
+            }
+            
+            // Generar JWT token y refresh token
+            String jwtToken = jwtService.generateToken(user);
+            String refreshToken = jwtService.generateRefreshToken(user);
+            
+            System.out.println("Tokens generated successfully");
+            
+            AuthResponseDTO response = AuthResponseDTO.builder()
+                    .token(jwtToken)
+                    .refreshToken(refreshToken)
+                    .fullName(user.getFullName())
+                    .email(user.getEmail())
+                    .role(user.getRole())
+                    .build();
+                    
+            System.out.println("Response built: " + response);
+            return response;
+            
+        } catch (Exception e) {
+            System.out.println("Login failed: " + e.getMessage());
+            e.printStackTrace();
+            throw e;
         }
-        
-        // Generar JWT token y refresh token
-        String jwtToken = jwtService.generateToken(user);
-        String refreshToken = jwtService.generateRefreshToken(user);
-        
-        return AuthResponseDTO.builder()
-                .token(jwtToken)
-                .refreshToken(refreshToken)
-                .fullName(user.getFullName())
-                .email(user.getEmail())
-                .role(user.getRole())
-                .build();
     }
     
     public AuthResponseDTO refreshToken(RefreshTokenRequestDTO refreshTokenRequestDTO) {

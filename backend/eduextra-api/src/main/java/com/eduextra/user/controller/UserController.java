@@ -18,6 +18,13 @@ import lombok.RequiredArgsConstructor;
 
 import com.eduextra.exception.ErrorResponse;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+import java.util.List;
+
 /**
  * REST controller for managing users.
  * Implements RESTful principles with standardized responses and proper HTTP status codes.
@@ -27,11 +34,6 @@ import com.eduextra.exception.ErrorResponse;
  * 
  * Security: All endpoints require JWT Bearer authentication.
  */
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 @RestController
 @RequestMapping("/users")
@@ -184,5 +186,29 @@ public class UserController {
     public ResponseEntity<Void> permanentlyDeleteUser(@PathVariable Long id) {
         userService.permanentlyDeleteUser(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @Operation(
+        summary = "Get current user profile",
+        description = "Retrieves the profile information of the currently authenticated user based on the JWT token.",
+        tags = {"User Management"},
+        responses = {
+            @ApiResponse(responseCode = "200", description = "User profile retrieved successfully", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = UserResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "User not authenticated", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class))),
+            @ApiResponse(responseCode = "404", description = "User not found", 
+                content = @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorResponse.class)))
+        }
+    )
+    @GetMapping("/profile")
+    public ResponseEntity<UserResponseDTO> getCurrentUserProfile() {
+        // Get current authentication from SecurityContext
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String userEmail = authentication.getName(); // This is the email from JWT token
+        
+        // Get user profile by email
+        UserResponseDTO userProfile = userService.getUserByEmail(userEmail);
+        return ResponseEntity.ok(userProfile);
     }
 }

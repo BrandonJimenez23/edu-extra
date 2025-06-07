@@ -1,20 +1,19 @@
 import { Routes, Route } from 'react-router-dom';
 import Layout from '../layout/Layout';
 
+// Auth Components
+import Login from '../features/auth/pages/Login';
+import { ProtectedRoute, PublicRoute } from '../components/auth/ProtectedRoute';
+
 // Pages
 import Dashboard from '../pages/Dashboard';
-import UserList from '../pages/UserList';
+import UnifiedUserList from '../pages/UnifiedUserList';
 import Activities from '../pages/Activities';
 import ComponentLibrary from '../pages/ComponentLibrary';
 import UserForm from '../features/users/components/UserForm';
+import CreateUser from '../features/users/pages/CreateUser';
 
-// Protected Route wrapper (para futuro uso con autenticación)
-const ProtectedRoute = ({ children }) => {
-  // Aquí irá la lógica de autenticación en el futuro
-  return children;
-};
-
-// Layout wrapper para páginas que necesitan el layout principal
+// Layout wrapper for pages that need the main layout
 const LayoutRoute = ({ children, pageTitle }) => (
   <Layout pageTitle={pageTitle}>
     {children}
@@ -24,7 +23,17 @@ const LayoutRoute = ({ children, pageTitle }) => (
 export default function AppRoutes() {
   return (
     <Routes>
-      {/* Rutas principales con Layout */}
+      {/* Public Routes */}
+      <Route 
+        path="/login" 
+        element={
+          <PublicRoute>
+            <Login />
+          </PublicRoute>
+        } 
+      />
+
+      {/* Protected Routes with Layout */}
       <Route 
         path="/" 
         element={
@@ -37,14 +46,36 @@ export default function AppRoutes() {
       />
       
       <Route 
-        path="/users" 
+        path="/dashboard" 
         element={
           <ProtectedRoute>
-            <LayoutRoute pageTitle="Gestión de Usuarios">
-              <UserList />
+            <LayoutRoute pageTitle="Dashboard">
+              <Dashboard />
             </LayoutRoute>
           </ProtectedRoute>
         } 
+      />
+      
+      <Route 
+        path="/users" 
+        element={
+          <ProtectedRoute requiredRoles={['ADMIN']}>
+            <LayoutRoute pageTitle="User Management">
+              <UnifiedUserList />
+            </LayoutRoute>
+          </ProtectedRoute>
+        } 
+      />
+      
+      <Route 
+        path="/users/create" 
+        element={
+          <ProtectedRoute requiredRoles={['ADMIN']}>
+            <LayoutRoute pageTitle="Create User">
+              <CreateUser />
+            </LayoutRoute>
+          </ProtectedRoute>
+        }
       />
       
       <Route 

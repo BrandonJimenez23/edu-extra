@@ -52,6 +52,12 @@ public class UserService {
         return mapToResponseDTO(user);
     }
 
+    public UserResponseDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+            .orElseThrow(() -> new UserNotFoundException("User not found"));
+        return mapToResponseDTO(user);
+    }
+
     public List<UserResponseDTO> getAllUsers() {
         return userRepository.findAll().stream().map(this::mapToResponseDTO).collect(Collectors.toList());
     }

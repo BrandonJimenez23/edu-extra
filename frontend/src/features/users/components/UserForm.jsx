@@ -1,11 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
-import Form from '../../../components/layouts/Form';
-import Card from '../../../components/ui/Card';
-import Input from '../../../components/ui/Input';
-import Select from '../../../components/ui/Select';
-import FormField from '../../../components/ui/FormField';
+import { Card, Form, FormField, Input, Select } from '../../../components/ui';
 
 // Import user models and validation
 import {
