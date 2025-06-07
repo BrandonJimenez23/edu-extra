@@ -1,25 +1,50 @@
 import UserForm from '../features/users/components/UserForm';
-import Card from '../components/ui/Card';
-import Button from '../components/ui/Button';
-import { Plus, Users, UserCheck, UserX } from 'lucide-react';
+import { Card, Button, Badge, Avatar } from '../components/ui';
+import Table from '../components/layouts/Table';
+import { Plus, Users, UserCheck, UserX, Edit, Trash2 } from 'lucide-react';
 import { mockUsers } from '../data/mockData';
+import { 
+    getRoleInfo, 
+    getStatusInfo, 
+    getUserInitials, 
+    getDisplayName, 
+    getAvatarUrl 
+} from '../utils/userUtils';
 
 export default function UserList() {
     const handleCreateUser = (userData) => {
         console.log('Creating user:', userData);
     };
 
+    const handleEditUser = (user) => {
+        console.log('Editing user:', user);
+    };
+
+    const handleDeleteUser = (user) => {
+        console.log('Deleting user:', user);
+    };
+
+    // Process users data for display
+    const processedUsers = mockUsers.map(user => ({
+        ...user,
+        displayName: getDisplayName(user),
+        initials: getUserInitials(getDisplayName(user)),
+        avatarUrl: getAvatarUrl(user),
+        roleInfo: getRoleInfo(user.role),
+        statusInfo: getStatusInfo(user.isActive ? 'active' : 'inactive')
+    }));
+
     return (
         <div className="space-y-6">
             {/* Header section */}
             <div className="flex justify-between items-center">
                 <div>
-                    <h1 className="text-2xl font-bold text-gray-900">Usuarios</h1>
-                    <p className="text-gray-600">Gestiona los usuarios del sistema EduExtra</p>
+                    <h1 className="text-2xl font-bold text-gray-900">Users</h1>
+                    <p className="text-gray-600">Manage EduExtra system users</p>
                 </div>
                 <Button variant="primary">
                     <Plus className="h-4 w-4 mr-2" />
-                    Nuevo Usuario
+                    New User
                 </Button>
             </div>
 
@@ -31,8 +56,8 @@ export default function UserList() {
                             <Users className="h-6 w-6 text-blue-600" />
                         </div>
                         <div className="ml-4">
-                            <p className="text-sm font-medium text-gray-600">Total Usuarios</p>
-                            <p className="text-2xl font-bold text-gray-900">156</p>
+                            <p className="text-sm font-medium text-gray-600">Total Users</p>
+                            <p className="text-2xl font-bold text-gray-900">{mockUsers.length}</p>
                         </div>
                     </div>
                 </Card>
@@ -43,8 +68,10 @@ export default function UserList() {
                             <UserCheck className="h-6 w-6 text-green-600" />
                         </div>
                         <div className="ml-4">
-                            <p className="text-sm font-medium text-gray-600">Activos</p>
-                            <p className="text-2xl font-bold text-green-600">142</p>
+                            <p className="text-sm font-medium text-gray-600">Active</p>
+                            <p className="text-2xl font-bold text-green-600">
+                                {mockUsers.filter(u => u.isActive).length}
+                            </p>
                         </div>
                     </div>
                 </Card>
@@ -55,8 +82,10 @@ export default function UserList() {
                             <UserX className="h-6 w-6 text-yellow-600" />
                         </div>
                         <div className="ml-4">
-                            <p className="text-sm font-medium text-gray-600">Estudiantes</p>
-                            <p className="text-2xl font-bold text-yellow-600">89</p>
+                            <p className="text-sm font-medium text-gray-600">Students</p>
+                            <p className="text-2xl font-bold text-yellow-600">
+                                {mockUsers.filter(u => u.role === 'STUDENT').length}
+                            </p>
                         </div>
                     </div>
                 </Card>
@@ -67,101 +96,114 @@ export default function UserList() {
                             <Users className="h-6 w-6 text-purple-600" />
                         </div>
                         <div className="ml-4">
-                            <p className="text-sm font-medium text-gray-600">Monitores</p>
-                            <p className="text-2xl font-bold text-purple-600">12</p>
+                            <p className="text-sm font-medium text-gray-600">Teachers</p>
+                            <p className="text-2xl font-bold text-purple-600">
+                                {mockUsers.filter(u => u.role === 'TEACHER').length}
+                            </p>
                         </div>
                     </div>
                 </Card>
             </div>
 
-            {/* Users table */}
+            {/* Users table with new modular Table component */}
             <Card className="overflow-hidden">
                 <div className="px-6 py-4 border-b border-gray-200">
-                    <h3 className="text-lg font-medium text-gray-900">Lista de Usuarios</h3>
+                    <h3 className="text-lg font-medium text-gray-900">User List</h3>
+                    <p className="text-sm text-gray-600 mt-1">
+                        Manage and view all system users with their roles and status
+                    </p>
                 </div>
 
-                <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
-                        <thead className="bg-gray-50">
-                            <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Usuario
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Rol
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Estado
-                                </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Fecha de registro
-                                </th>
-                                <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                    Acciones
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody className="bg-white divide-y divide-gray-200">
-                            {mockUsers.map((user) => (
-                                <tr key={user.id} className="hover:bg-gray-50">
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <div className="flex items-center">
-                                            <img
-                                                className="h-10 w-10 rounded-full object-cover"
-                                                src={user.avatarUrl}
-                                                alt={`Avatar de ${user.fullName}`}
-                                            />
-                                            <div className="ml-4">
-                                                <div className="text-sm font-medium text-gray-900">
-                                                    {user.fullName}
-                                                </div>
-                                                <div className="text-sm text-gray-500">
-                                                    {user.email}
-                                                </div>
+                <Table size="md" bordered hover zebra>
+                    <Table.Header>
+                        <Table.Row isHeader>
+                            <Table.Cell as="th">User</Table.Cell>
+                            <Table.Cell as="th">Role</Table.Cell>
+                            <Table.Cell as="th">Status</Table.Cell>
+                            <Table.Cell as="th">Registration Date</Table.Cell>
+                            <Table.Cell as="th" align="right">Actions</Table.Cell>
+                        </Table.Row>
+                    </Table.Header>
+                    <Table.Body>
+                        {processedUsers.map((user) => (
+                            <Table.Row key={user.id}>
+                                {/* User info with Avatar */}
+                                <Table.Cell>
+                                    <div className="flex items-center">
+                                        <Avatar
+                                            src={user.avatarUrl}
+                                            initials={user.initials}
+                                            alt={`Avatar of ${user.displayName}`}
+                                            size="md"
+                                            status={user.statusInfo.indicator}
+                                        />
+                                        <div className="ml-4">
+                                            <div className="text-sm font-medium text-gray-900">
+                                                {user.displayName}
+                                            </div>
+                                            <div className="text-sm text-gray-500">
+                                                {user.email}
                                             </div>
                                         </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${user.role === 'ADMIN' ? 'bg-red-100 text-red-800' :
-                                                user.role === 'COORDINATOR' ? 'bg-blue-100 text-blue-800' :
-                                                    user.role === 'MONITOR' ? 'bg-purple-100 text-purple-800' :
-                                                        user.role === 'STUDENT' ? 'bg-green-100 text-green-800' :
-                                                            'bg-gray-100 text-gray-800'
-                                            }`}>
-                                            {user.role === 'ADMIN' ? 'Administrador' :
-                                                user.role === 'COORDINATOR' ? 'Coordinador' :
-                                                    user.role === 'MONITOR' ? 'Monitor' :
-                                                        user.role === 'STUDENT' ? 'Estudiante' :
-                                                            user.role}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap">
-                                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${user.isActive ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
-                                            }`}>
-                                            {user.isActive ? 'Activo' : 'Inactivo'}
-                                        </span>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                        {new Date(user.createdAt).toLocaleDateString('es-ES')}
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                        <div className="flex justify-end gap-2">
-                                            <Button variant="secondary" size="sm">
-                                                Editar
-                                            </Button>
-                                            <Button variant="danger" size="sm" ghost>
-                                                Eliminar
-                                            </Button>
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                </div>
+                                    </div>
+                                </Table.Cell>
+
+                                {/* Role badge */}
+                                <Table.Cell>
+                                    <Badge 
+                                        variant={user.roleInfo.variant}
+                                        size="sm"
+                                    >
+                                        {user.roleInfo.label}
+                                    </Badge>
+                                </Table.Cell>
+
+                                {/* Status badge */}
+                                <Table.Cell>
+                                    <Badge 
+                                        variant={user.statusInfo.variant}
+                                        size="sm"
+                                    >
+                                        {user.statusInfo.label}
+                                    </Badge>
+                                </Table.Cell>
+
+                                {/* Registration date */}
+                                <Table.Cell>
+                                    <span className="text-sm text-gray-500">
+                                        {new Date(user.createdAt).toLocaleDateString('en-US')}
+                                    </span>
+                                </Table.Cell>
+
+                                {/* Actions */}
+                                <Table.Cell align="right">
+                                    <div className="flex justify-end gap-2">
+                                        <Button 
+                                            variant="secondary" 
+                                            size="sm"
+                                            onClick={() => handleEditUser(user)}
+                                        >
+                                            <Edit className="h-4 w-4 mr-1" />
+                                            Edit
+                                        </Button>
+                                        <Button 
+                                            variant="danger" 
+                                            size="sm" 
+                                            ghost
+                                            onClick={() => handleDeleteUser(user)}
+                                        >
+                                            <Trash2 className="h-4 w-4 mr-1" />
+                                            Delete
+                                        </Button>
+                                    </div>
+                                </Table.Cell>
+                            </Table.Row>
+                        ))}
+                    </Table.Body>
+                </Table>
             </Card>
 
-            {/* Form example */}
+            {/* Form example and information */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 <Card>
                     <UserForm
@@ -171,22 +213,50 @@ export default function UserList() {
                 </Card>
 
                 <Card className="p-6">
-                    <h3 className="text-lg font-medium text-gray-900 mb-4">Información</h3>
-                    <div className="space-y-3 text-sm">
-                        <p className="text-gray-600">
-                            <strong>Roles disponibles:</strong>
-                        </p>
-                        <ul className="space-y-1 text-gray-500 ml-4">
-                            <li>• <strong>Administrador:</strong> Acceso completo al sistema</li>
-                            <li>• <strong>Coordinador:</strong> Gestiona actividades y monitores</li>
-                            <li>• <strong>Monitor:</strong> Supervisa estudiantes y actividades</li>
-                            <li>• <strong>Estudiante:</strong> Participa en actividades</li>
-                            <li>• <strong>Vecino:</strong> Acceso limitado a información pública</li>
-                        </ul>
+                    <h3 className="text-lg font-medium text-gray-900 mb-4">Role Information</h3>
+                    <div className="space-y-4">
+                        <div className="space-y-3 text-sm">
+                            <p className="text-gray-600 font-medium">Available roles:</p>
+                            <div className="space-y-2">
+                                {['admin', 'teacher', 'student', 'coordinator'].map(role => {
+                                    const roleInfo = getRoleInfo(role);
+                                    return (
+                                        <div key={role} className="flex items-center justify-between p-2 bg-gray-50 rounded-lg">
+                                            <div className="flex items-center gap-2">
+                                                <Badge variant={roleInfo.variant} size="sm">
+                                                    {roleInfo.label}
+                                                </Badge>
+                                                <span className="text-xs text-gray-600">
+                                                    {roleInfo.description}
+                                                </span>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        
+                        <div className="pt-4 border-t border-gray-200">
+                            <p className="text-gray-600 font-medium text-sm mb-2">Status indicators:</p>
+                            <div className="space-y-2">
+                                {['active', 'inactive', 'pending', 'suspended'].map(status => {
+                                    const statusInfo = getStatusInfo(status);
+                                    return (
+                                        <div key={status} className="flex items-center gap-2">
+                                            <Badge variant={statusInfo.variant} size="sm">
+                                                {statusInfo.label}
+                                            </Badge>
+                                            <span className="text-xs text-gray-600">
+                                                {statusInfo.description}
+                                            </span>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
                     </div>
                 </Card>
             </div>
         </div>
-
     );
 }

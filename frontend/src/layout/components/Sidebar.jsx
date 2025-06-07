@@ -4,6 +4,8 @@ import {
   Users, 
   ClipboardList, 
   Palette,
+  FileEdit,
+  Layout,
   ChevronLeft,
   ChevronRight
 } from 'lucide-react';
@@ -11,9 +13,9 @@ import { Logo } from '../../components/ui/Logo';
 
 const navigationItems = [
   { href: '/', label: 'Dashboard', icon: BarChart3 },
-  { href: '/users', label: 'Usuarios', icon: Users },
-  { href: '/activities', label: 'Actividades', icon: ClipboardList },
-  { href: '/design-system', label: 'Diseño', icon: Palette },
+  { href: '/users', label: 'Users', icon: Users },
+  { href: '/activities', label: 'Activities', icon: ClipboardList },
+  { href: '/components', label: 'Component Library', icon: Layout },
 ];
 
 export default function Sidebar({ isCollapsed = false, onToggle, isMobile = false }) {

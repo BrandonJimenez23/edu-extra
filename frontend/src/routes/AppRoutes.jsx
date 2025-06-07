@@ -5,7 +5,7 @@ import Layout from '../layout/Layout';
 import Dashboard from '../pages/Dashboard';
 import UserList from '../pages/UserList';
 import Activities from '../pages/Activities';
-import DesignSystem from '../pages/DesginSystem';
+import ComponentLibrary from '../pages/ComponentLibrary';
 import UserForm from '../features/users/components/UserForm';
 
 // Protected Route wrapper (para futuro uso con autenticación)
@@ -51,7 +51,7 @@ export default function AppRoutes() {
         path="/activities" 
         element={
           <ProtectedRoute>
-            <LayoutRoute pageTitle="Actividades">
+            <LayoutRoute pageTitle="Activities">
               <Activities />
             </LayoutRoute>
           </ProtectedRoute>
@@ -59,39 +59,38 @@ export default function AppRoutes() {
       />
       
       <Route 
-        path="/design-system" 
+        path="/components" 
         element={
           <ProtectedRoute>
-            <LayoutRoute pageTitle="Sistema de Diseño">
-              <DesignSystem />
+            <LayoutRoute pageTitle="Component Library">
+              <ComponentLibrary />
             </LayoutRoute>
           </ProtectedRoute>
         } 
       />
       
-      {/* Rutas específicas */}
       <Route 
         path="/user-form" 
         element={
           <ProtectedRoute>
-            <LayoutRoute pageTitle="Formulario de Usuario">
+            <LayoutRoute pageTitle="User Form">
               <UserForm />
             </LayoutRoute>
           </ProtectedRoute>
         } 
       />
       
-      {/* Ruta 404 */}
+      {/* 404 Route */}
       <Route 
         path="*" 
         element={
-          <LayoutRoute pageTitle="Página no encontrada">
+          <LayoutRoute pageTitle="Page Not Found">
             <div className="text-center py-12">
               <h1 className="text-2xl font-bold text-gray-900 mb-4">
-                404 - Página no encontrada
+                404 - Page Not Found
               </h1>
               <p className="text-gray-600">
-                La página que buscas no existe.
+                The page you are looking for does not exist.
               </p>
             </div>
           </LayoutRoute>

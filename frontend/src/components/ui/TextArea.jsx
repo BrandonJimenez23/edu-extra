@@ -2,33 +2,33 @@ import { forwardRef } from 'react';
 import clsx from 'clsx';
 
 /**
- * Input Component
+ * TextArea Component
  * 
- * A flexible input component with multiple variants, sizes, and validation states.
- * Supports labels, helper text, error messages, and accessibility features.
+ * A flexible textarea component with multiple variants, sizes, and validation states.
+ * Supports labels, helper text, error messages, resizing options, and accessibility features.
  * Built with Tailwind CSS for consistent styling.
  * 
  * @param {Object} props - Component props
- * @param {string} props.id - Input ID for accessibility
- * @param {string} props.name - Input name attribute
- * @param {'text' | 'email' | 'password' | 'number' | 'url' | 'tel'} props.type - Input type
- * @param {string} props.value - Input value
+ * @param {string} props.id - TextArea ID for accessibility
+ * @param {string} props.name - TextArea name attribute
+ * @param {string} props.value - TextArea value
  * @param {Function} props.onChange - Change handler function
  * @param {string} props.placeholder - Placeholder text
  * @param {string} props.className - Additional CSS classes
  * @param {boolean} props.disabled - Disabled state
  * @param {string} props.error - Error message to display
  * @param {boolean} props.required - Required field indicator
- * @param {'sm' | 'md' | 'lg'} props.size - Input size variant
- * @param {'default' | 'filled' | 'outlined'} props.variant - Input style variant
- * @param {string} props.label - Input label text
- * @param {string} props.helperText - Helper text below input
- * @param {Object} props.ref - React ref for input element
+ * @param {'sm' | 'md' | 'lg'} props.size - TextArea size variant
+ * @param {'default' | 'filled' | 'outlined'} props.variant - TextArea style variant
+ * @param {string} props.label - TextArea label text
+ * @param {string} props.helperText - Helper text below textarea
+ * @param {number} props.rows - Number of visible text rows
+ * @param {'none' | 'vertical' | 'horizontal' | 'both'} props.resize - Resize behavior
+ * @param {Object} props.ref - React ref for textarea element
  */
-const Input = forwardRef(({
+const TextArea = forwardRef(({
     id,
     name,
-    type = 'text',
     value,
     onChange,
     placeholder = '',
@@ -40,6 +40,8 @@ const Input = forwardRef(({
     variant = 'default',
     label,
     helperText,
+    rows = 4,
+    resize = 'vertical',
     ...props
 }, ref) => {
     // Size variants with appropriate padding and text sizes
@@ -56,8 +58,16 @@ const Input = forwardRef(({
         outlined: 'border-2 border-gray-300 focus:border-blue-ribbon-500 focus:ring-0'
     };
 
-    // Combine all input classes with conditional styling
-    const inputClasses = clsx(
+    // Resize behavior options for textarea
+    const resizeClasses = {
+        none: 'resize-none',
+        vertical: 'resize-y',
+        horizontal: 'resize-x',
+        both: 'resize'
+    };
+
+    // Combine all textarea classes with conditional styling
+    const textAreaClasses = clsx(
         // Base styles with transitions and accessibility
         'w-full rounded-md shadow-sm transition-colors duration-200',
         'focus:outline-none focus:ring-2 focus:ring-opacity-50',
@@ -66,6 +76,8 @@ const Input = forwardRef(({
         sizeClasses[size],
         // Style variants (only applied when no error)
         !error && variantClasses[variant],
+        // Resize behavior
+        resizeClasses[resize],
         // State-based styling
         {
             'border-coral-red-500 focus:border-coral-red-500 focus:ring-coral-red-500': error,
@@ -93,17 +105,17 @@ const Input = forwardRef(({
                 </label>
             )}
             
-            <input
+            <textarea
                 ref={ref}
                 id={id}
                 name={name}
-                type={type}
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
                 disabled={disabled}
                 required={required}
-                className={inputClasses}
+                rows={rows}
+                className={textAreaClasses}
                 aria-invalid={error ? 'true' : 'false'}
                 aria-describedby={clsx(
                     error && errorId,
@@ -144,6 +156,6 @@ const Input = forwardRef(({
     );
 });
 
-Input.displayName = 'Input';
+TextArea.displayName = 'TextArea';
 
-export default Input;
+export default TextArea;

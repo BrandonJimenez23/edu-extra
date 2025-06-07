@@ -1,9 +1,11 @@
-import { useState } from 'react';
+import React from 'react';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
 import Form from '../../../components/layouts/Form';
 import Card from '../../../components/ui/Card';
 import Input from '../../../components/ui/Input';
-import Label from '../../../components/ui/Label';
 import Select from '../../../components/ui/Select';
+import FormField from '../../../components/ui/FormField';
 
 // Import user models and validation
 import {
@@ -11,7 +13,6 @@ import {
   apiUserToFormUser,
   formUserToApiRequest,
   ROLE_OPTIONS,
-  validateUserData,
   userFormSchema
 } from '../models';
 
@@ -22,53 +23,34 @@ export default function UserForm({
     loading = false,
     isEditMode = false
 }) {
-    // Initialize form with user data or empty form
-    const [formData, setFormData] = useState(() => {
-        if (user) {
-            return apiUserToFormUser(user);
-        }
-        return createUserForm();
+    // Initialize default values
+    const defaultValues = user ? apiUserToFormUser(user) : createUserForm();
+    
+    // Configure React Hook Form with Yup validation
+    const {
+        register,
+        handleSubmit,
+        formState: { errors, isSubmitting },
+        reset
+    } = useForm({
+        resolver: yupResolver(userFormSchema(isEditMode)),
+        defaultValues,
+        mode: 'onChange' // Validate on change for better UX
     });
-    const [errors, setErrors] = useState({});
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({
-            ...formData,
-            [name]: value
-        });
-        
-        // Limpiar error al cambiar el valor
-        if (errors[name]) {
-            setErrors({
-                ...errors,
-                [name]: ''
-            });
-        }
-    };
-
-    const validateForm = async () => {
-        const result = await validateUserData(
-            formData, 
-            userFormSchema, 
-            { isEditMode }
-        );
-        
-        if (!result.isValid) {
-            setErrors(result.errors);
-            return false;
-        }
-        
-        setErrors({});
-        return true;
-    };
-
-    const handleSubmit = async () => {
-        if (await validateForm()) {
+    const onSubmitForm = async (formData) => {
+        try {
             // Convert form data to API format
             const apiData = formUserToApiRequest(formData, isEditMode);
-            onSubmit(apiData);
+            await onSubmit(apiData);
+        } catch (error) {
+            console.error('Error submitting form:', error);
         }
+    };
+
+    const handleReset = () => {
+        reset();
+        onCancel();
     };
 
     const roleOptions = ROLE_OPTIONS;
@@ -79,89 +61,85 @@ export default function UserForm({
             subtitle={isEditMode ? 'Actualiza los datos del usuario' : 'Ingresa los datos para crear un nuevo usuario'}
         >
             <Form
-                onSubmit={handleSubmit}
-                onReset={onCancel}
-                loading={loading}
+                onSubmit={handleSubmit(onSubmitForm)}
+                onReset={handleReset}
+                loading={loading || isSubmitting}
                 submitText={isEditMode ? 'Actualizar' : 'Crear'}
                 resetText="Cancelar"
                 columns={2}
+                spacing="normal"
             >
                 {/* Primera columna */}
                 <div className="space-y-4">
-                    <div>
-                        <Label htmlFor="fullName" required>Nombre Completo</Label>
+                    <FormField error={!!errors.fullName}>
                         <Input
+                            {...register('fullName')}
                             id="fullName"
-                            name="fullName"
-                            value={formData.fullName}
-                            onChange={handleChange}
+                            label="Nombre Completo"
                             placeholder="Ej: Juan Pérez"
-                            error={errors.fullName}
+                            error={errors.fullName?.message}
                             required
+                            size="md"
                         />
-                    </div>
+                    </FormField>
 
-                    <div>
-                        <Label htmlFor="email" required>Email</Label>
+                    <FormField error={!!errors.email}>
                         <Input
+                            {...register('email')}
                             id="email"
-                            name="email"
                             type="email"
-                            value={formData.email}
-                            onChange={handleChange}
+                            label="Email"
                             placeholder="usuario@ejemplo.com"
-                            error={errors.email}
+                            error={errors.email?.message}
                             required
+                            size="md"
                         />
-                    </div>
+                    </FormField>
 
                     {!isEditMode && (
-                        <div>
-                            <Label htmlFor="password" required>Contraseña</Label>
+                        <FormField error={!!errors.password}>
                             <Input
+                                {...register('password')}
                                 id="password"
-                                name="password"
                                 type="password"
-                                value={formData.password}
-                                onChange={handleChange}
+                                label="Contraseña"
                                 placeholder="••••••••"
-                                error={errors.password}
-                                required={!isEditMode}
+                                error={errors.password?.message}
+                                required
+                                size="md"
+                                helperText="Mínimo 6 caracteres"
                             />
-                        </div>
+                        </FormField>
                     )}
                 </div>
 
                 {/* Segunda columna */}
                 <div className="space-y-4">
-                    <div>
-                        <Label htmlFor="role" required>Rol</Label>
+                    <FormField error={!!errors.role}>
                         <Select
+                            {...register('role')}
                             id="role"
-                            name="role"
-                            value={formData.role}
-                            onChange={handleChange}
+                            label="Rol"
                             options={roleOptions}
-                            error={errors.role}
+                            error={errors.role?.message}
                             required
+                            size="md"
+                            placeholder="Selecciona un rol"
                         />
-                    </div>
+                    </FormField>
 
-                    <div>
-                        <Label htmlFor="avatarUrl">URL del Avatar</Label>
+                    <FormField error={!!errors.avatarUrl}>
                         <Input
+                            {...register('avatarUrl')}
                             id="avatarUrl"
-                            name="avatarUrl"
                             type="url"
-                            value={formData.avatarUrl}
-                            onChange={handleChange}
-                            placeholder="https://ejemplo.com/avatar.jpg (opcional)"
-                            error={errors.avatarUrl}
+                            label="URL del Avatar"
+                            placeholder="https://ejemplo.com/avatar.jpg"
+                            error={errors.avatarUrl?.message}
+                            size="md"
+                            helperText="Si no se proporciona, se usará un avatar por defecto"
                         />
-                        <p className="text-sm text-gray-500 mt-1">
-                            Si no se proporciona, se usará un avatar por defecto
-                        </p>
-                    </div>
+                    </FormField>
                 </div>
             </Form>
         </Card>

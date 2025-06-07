@@ -2,7 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { User, Settings, HelpCircle, LogOut, ChevronDown } from 'lucide-react';
 
 const mockUser = {
-  name: 'Brandon González',
+  name: 'Brandon Jiménez',
   email: 'brandon@eduextra.com',
   avatar: 'https://unavatar.io/Kronnoz16',
   role: 'Administrador'

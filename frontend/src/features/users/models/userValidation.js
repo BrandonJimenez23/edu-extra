@@ -74,17 +74,12 @@ export const userUpdateSchema = yup.object({
 /**
  * Schema for user forms (frontend validation)
  * Includes conditional password validation based on edit mode
+ * @param {boolean} isEditMode - Whether the form is in edit mode
  */
-export const userFormSchema = yup.object({
+export const userFormSchema = (isEditMode = false) => yup.object({
   id: yup.string().nullable(),
   ...baseUserSchema,
-  password: yup
-    .string()
-    .when('$isEditMode', {
-      is: false,
-      then: (schema) => passwordSchema,
-      otherwise: (schema) => optionalPasswordSchema
-    })
+  password: isEditMode ? optionalPasswordSchema : passwordSchema
 });
 
 /**
