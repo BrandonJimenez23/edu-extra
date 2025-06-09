@@ -76,176 +76,63 @@ eduextra-api/
 - **Environment Profiles**: Separate configurations for dev/test/prod
 - **Security First**: Spring Security integration with JWT filters
 
-## ✅ Implementation Status
+## 🚀 Quick Start
 
-### Infrastructure & Setup
-- [x] Project structure with domain-driven design
-- [x] PostgreSQL database integration
-- [x] CORS configuration for frontend integration
-- [x] Swagger/OpenAPI 3 documentation setup
-- [x] Docker containerization
-- [x] Environment-specific configurations
-- [x] Maven build configuration
+### Prerequisites
+- Java 17+
+- PostgreSQL 12+
+- Maven 3.6+
 
-### Security Implementation
+### Development Setup
 
-- [x] JWT token generation and validation
-- [x] Spring Security configuration with CORS support
-- [x] JWT authentication filter with proper error handling
-- [x] Custom UserDetailsService implementation
-- [x] Refresh token system (7-day expiration)
-- [x] **Access token system (15-minute expiration)**
-- [x] Password encryption with BCrypt
-- [x] **Security context management for user authentication**
-- [x] **User profile endpoint for token validation**
-- [x] **Fixed authentication persistence across page reloads**
-- [ ] Role-based endpoint protection
-- [ ] API rate limiting
-- [ ] Security audit logging
+1. **Clone and Setup Database**
+   ```bash
+   # Start PostgreSQL database
+   docker run --name eduextra-db -e POSTGRES_PASSWORD=password -d -p 5432:5432 postgres:15
+   
+   # Create database
+   createdb -h localhost -U postgres eduextra_db
+   ```
 
-### Users Module
+2. **Run Application**
+   ```bash
+   cd backend/eduextra-api
+   ./mvnw spring-boot:run
+   ```
 
-- [x] User entity with JPA annotations
-- [x] User repository with custom queries
-- [x] User service with comprehensive business logic
-- [x] **Complete CRUD REST endpoints with proper validation**
-- [x] User registration and authentication
-- [x] **User profile endpoint (`/users/profile`) for current user**
-- [x] Request/response DTOs with validation
-- [x] User enable/disable functionality
-- [x] **Advanced pagination support with filtering by name and role**
-- [x] Comprehensive validation with detailed error messages
-- [x] **Email uniqueness validation and conflict handling**
-- [x] **Password update functionality in user updates**
-- [ ] Password recovery system
-- [ ] User profile image upload
-- [ ] User activity logging
+3. **Access API Documentation**
+   - Swagger UI: http://localhost:8080/swagger-ui.html
+   - API Docs: http://localhost:8080/v3/api-docs
 
-### Authentication System
+### Environment Configuration
 
-- [x] User registration endpoint
-- [x] User login with JWT generation
-- [x] Refresh token endpoint
-- [x] **Token validation middleware with proper error handling**
-- [x] **User profile endpoint for current authenticated user**
-- [x] Authentication DTOs (LoginRequest, AuthResponse)
-- [x] Custom authentication service
-- [x] **Complete authentication flow with persistent sessions**
-- [x] **Security context integration for user identification**
-- [ ] Password reset flow
-- [ ] Email verification
-- [ ] Two-factor authentication
+The application supports multiple profiles:
 
-### Data Management
-- [x] Generic pagination DTO (PagedResponseDTO)
-- [x] Standardized error responses
-- [x] Validation error details
-- [x] Custom exception handling
-- [x] Database constraints and indexes
-- [ ] Database migration scripts
-- [ ] Data seeding for development
-- [ ] Backup and recovery procedures
+- **Development**: `application-dev.properties`
+- **Production**: `application-prod.properties`
+- **Testing**: `application-test.properties`
 
-### API Documentation
-- [x] Swagger/OpenAPI configuration
-- [x] Endpoint documentation with examples
-- [x] Error response documentation
-- [x] Security scheme documentation
-- [x] DTO schema documentation
-- [ ] API versioning strategy
-- [ ] Comprehensive request/response examples
-- [ ] Performance considerations documentation
+### Docker Deployment
 
-### Activities Module
-- [ ] Activity entity design
-- [ ] Activity repository and service
-- [ ] Activity CRUD endpoints
-- [ ] Activity categories and tags
-- [ ] Capacity management
-- [ ] Schedule management
+```bash
+# Build and run with Docker Compose (from project root)
+docker compose up --build
+```
 
-### Enrollments Module
-- [ ] Enrollment entity relationships
-- [ ] Enrollment business logic
-- [ ] Enrollment/cancellation endpoints
-- [ ] Waitlist management
-- [ ] Enrollment notifications
+## 📊 Current Implementation Status
 
-### Testing & Quality
-- [x] Basic integration tests
-- [x] User controller tests
-- [ ] Service layer unit tests
-- [ ] Security integration tests
-- [ ] Database integration tests
-- [ ] API contract testing
+### ✅ Completed Features
+- **JWT Authentication**: Complete token-based authentication system
+- **User Management**: Full CRUD operations with pagination and filtering
+- **Security**: Spring Security integration with CORS and password encryption
+- **API Documentation**: Comprehensive Swagger/OpenAPI documentation
+- **Database Integration**: PostgreSQL with proper entity relationships
 
-### DevOps & Deployment
-- [x] Docker configuration
-- [x] Multi-stage Dockerfile
-- [x] Docker Compose integration
-- [ ] CI/CD pipeline configuration
-- [ ] Production environment setup
-- [ ] Database migration automation
-- [ ] Health check endpoints
-- [ ] Monitoring and logging
+### 🚧 In Development
+- **Activities Management**: Entity design and CRUD operations
+- **Enrollment System**: User-activity relationship management
 
----
-
-## 🚧 Current Status & Next Steps
-
-### ✅ COMPLETED - Authentication & User Management
-- **Authentication Flow**: Complete JWT-based authentication with access/refresh tokens
-- **User Profile Endpoint**: `/users/profile` for token validation and session persistence
-- **CRUD Operations**: Full user management with pagination, filtering, and validation
-- **Security Integration**: Spring Security with CORS, password encryption, and context management
-- **Database Integration**: PostgreSQL with proper constraints and relationships
-
-### ⏳ IMMEDIATE NEXT TASKS
-
-#### 1. User Edit Functionality
-- Frontend: Complete user edit form implementation
-- Validation: Ensure proper field validation and error handling
-- Integration: Connect edit form with existing PUT `/users/{id}` endpoint
-
-#### 2. Registration System
-- Frontend: Create registration page with form validation
-- Backend: Validate registration endpoint handles all edge cases
-- Security: Ensure proper password requirements and email validation
-
-#### 3. Activities Module (Next Major Feature)
-- Entity Design: Create Activity entity with proper relationships
-- Repository Layer: Implement ActivityRepository with custom queries
-- Service Layer: Business logic for activity management
-- Controller Layer: RESTful endpoints for activity CRUD
-- Frontend Integration: Activities management interface
-
-### 🎯 DEVELOPMENT ROADMAP
-
-#### Sprint 1: Complete User Management (1-2 days)
-- [ ] User edit form implementation
-- [ ] Registration page creation
-- [ ] Enhanced form validations
-- [ ] User profile management
-
-#### Sprint 2: Activities Foundation (3-5 days)
-- [ ] Activity entity and database schema
-- [ ] Basic CRUD endpoints for activities
-- [ ] Activity categories system
-- [ ] Frontend activities management page
-
-#### Sprint 3: Activities Advanced Features (3-5 days)
-- [ ] Activity scheduling and capacity management
-- [ ] Enrollment system design
-- [ ] Activity search and filtering
-- [ ] Activity status management
-
-#### Sprint 4: Polish & Testing (2-3 days)
-- [ ] Comprehensive testing suite
-- [ ] Performance optimizations
-- [ ] UI/UX improvements
-- [ ] Documentation updates
-
----
+> **Note**: For detailed development progress and task tracking, see [DEVELOPMENT_STATUS.md](../docs/DEVELOPMENT_STATUS.md)
 
 ## 🔐 Security Features
 
@@ -263,44 +150,43 @@ eduextra-api/
 5. Token validation on protected endpoints
 6. Refresh token for access token renewal
 
-## 📊 API Endpoints Overview
+## 📊 API Endpoints
 
 ### Authentication
-
 - `POST /auth/register` - User registration
 - `POST /auth/login` - User authentication  
 - `POST /auth/refresh-token` - Token renewal
 
 ### Users Management
-
 - `GET /users` - List all users
 - `GET /users/paginated` - Paginated user list with filters
 - `GET /users/{id}` - Get user by ID
-- `GET /users/profile` - **Get current authenticated user profile**
+- `GET /users/profile` - Get current authenticated user profile
 - `POST /users` - Create new user
 - `PUT /users/{id}` - Update user
-- `PATCH /users/{id}/enable` - **Enable user**
-- `PATCH /users/{id}/disable` - **Disable user**
-- `DELETE /users/{id}/permanent` - **Permanently delete user**
+- `PATCH /users/{id}/enable` - Enable user
+- `PATCH /users/{id}/disable` - Disable user
+- `DELETE /users/{id}/permanent` - Permanently delete user
 
 ### Documentation
 - `GET /swagger-ui.html` - Interactive API documentation
 - `GET /v3/api-docs` - OpenAPI specification
 
-## 🎯 Next Development Phases
+## 🧪 Testing
 
-### Phase 1: Core Features Completion
-- Activities management system
-- Enrollment workflow
-- Role-based access control implementation
+Run the test suite:
+```bash
+./mvnw test
+```
 
-### Phase 2: Advanced Features
-- File upload functionality
-- Email notification system
-- Advanced search and filtering
+Run specific test class:
+```bash
+./mvnw test -Dtest=UserControllerTest
+```
 
-### Phase 3: Production Readiness
-- Comprehensive testing suite
-- Performance optimizations
-- Production deployment pipeline
-- Monitoring and alerting
+## 📚 Additional Resources
+
+- [Architecture Documentation](../docs/ARCHITECTURE.md)
+- [API Documentation](http://localhost:8080/swagger-ui.html) (when running)
+- [Development Status](../docs/DEVELOPMENT_STATUS.md)
+- [Contributing Guidelines](../docs/CONTRIBUTING.md)

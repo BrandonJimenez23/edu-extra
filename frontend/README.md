@@ -89,207 +89,122 @@ frontend/
 - **Lucide React**: Consistent SVG icon system
 - **Responsive**: Scales appropriately across devices
 
-## ✅ Progress Checklist
+## 🚀 Quick Start
 
-### Initial Setup
-- [x] Configure project with Vite
-- [x] Integrate TailwindCSS with custom theme
-- [x] Configure routes with React Router DOM
-- [x] Configure Axios for API calls
-- [x] Set up ESLint and Prettier
+### Prerequisites
+- Node.js 18+
+- npm or yarn
 
-### Layout & Navigation
-- [x] Main layout with sidebar and topbar
-- [x] Responsive sidebar with collapse functionality
-- [x] Mobile-friendly navigation with overlay
-- [x] User menu with dropdown
-- [x] Search functionality in header
-- [x] Breadcrumb navigation structure
+### Development Setup
 
-### Base Components
-- [x] Button component with variants (primary, secondary, outline)
-- [x] Table component with customization options
-- [x] Form layout components
-- [x] Logo component with variants (light, dark, neutral)
-- [x] Card component for content containers
-- [x] Input, Label, and Select components
-- [x] Consistent icon system with Lucide React
-- [ ] Modal and notification components
-- [ ] Loading skeleton components
+1. **Install Dependencies**
+   ```bash
+   cd frontend
+   npm install
+   ```
 
-### User Module
+2. **Configure Environment**
+   ```bash
+   # Copy and edit environment variables
+   cp .env.example .env
+   ```
 
-- [x] **Complete user management system with unified data switching**
-- [x] **Enhanced user list with mock/API toggle functionality**
-- [x] **Persistent mock data system with localStorage**
-- [x] **Advanced user table with pagination and filtering**
-- [x] **User enable/disable functionality**
-- [x] **User creation with comprehensive validation**
-- [x] **User deletion with confirmation dialogs**
-- [x] **Real-time statistics and user count tracking**
-- [x] **Session-persistent mock operations**
-- [x] **Error handling and loading states**
-- ⏳ **User edit form (final missing piece)**
-- [ ] User profile management and settings
-- [ ] Advanced user search and filtering
-- [ ] User bulk operations
+3. **Start Development Server**
+   ```bash
+   npm run dev
+   ```
 
-### Design System
-- [x] Design system showcase page
-- [x] Component library documentation
-- [x] Custom color palette implementation
-- [x] Typography system (Poppins + Inter)
-- [x] Icon system documentation
-- [ ] Component variation examples
-- [ ] Accessibility guidelines
+4. **Access Application**
+   - Frontend: http://localhost:5173
+   - Backend API should be running on: http://localhost:8080
 
-### Activities Module
-- [x] Activities page structure
-- [x] Basic component layout
-- [x] Mock activities data
-- [ ] Activities list with filtering
-- [ ] Create/edit activity forms
-- [ ] User enrollment management
+### Build for Production
 
-### Dashboard
-- [x] Dashboard page with statistics
-- [x] Quick actions section
-- [x] Recent activities display
-- [x] Responsive grid layout
-- [ ] Real-time data integration
-- [ ] Interactive charts and graphs
+```bash
+npm run build
+npm run preview
+```
 
-### Authentication
+## 🎨 Design System
 
-- [x] **Complete JWT authentication system integration**
-- [x] **Token management with automatic refresh**
-- [x] **Protected route implementation**
-- [x] **Authentication persistence across sessions**
-- [x] **User context management**
-- [x] **Secure logout functionality**
-- ⏳ **Registration page implementation**
-- [ ] Password reset functionality
-- [ ] Two-factor authentication
-- [ ] Session timeout handling
+### Custom Color Palette
+- **Blue Ribbon**: Primary brand color (50-900 variants)
+- **Emerald**: Success states and positive actions
+- **Sunglow**: Accent color for highlights and active states
+- **Coral Red**: Error states and destructive actions
 
-### UX/UI Enhancements
-- [x] Responsive design for all screen sizes
-- [x] Consistent theme across components
-- [x] Semantic HTML structure
-- [x] Accessible component design
-- [x] Smooth transitions and animations
-- [ ] Dark/light mode toggle
-- [ ] Advanced animations and micro-interactions
-- [ ] Keyboard navigation support
+### Typography
+- **Headings**: Poppins (font-heading)
+- **Body Text**: Inter (font-sans)
 
-### Performance & Quality
-- [ ] Unit tests with React Testing Library
-- [ ] Integration tests
-- [ ] Code splitting for route-based chunks
-- [ ] Bundle size optimization
-- [ ] Production build configuration
+### Icons
+- **Lucide React**: Consistent SVG icon system
+- **Responsive**: Scales appropriately across devices
 
----
+## 🏗️ Architecture
 
-## 🚧 Current Implementation Status
+### State Management
+- **React Context**: Global state management for authentication and data mode
+- **Custom Hooks**: Reusable logic for API calls and state management
+- **Local Storage**: Persistent mock data system for development
 
-### ✅ COMPLETED FEATURES
+### Data Layer
+- **Unified Data System**: Toggle between mock data and API calls
+- **API Configuration**: Axios with interceptors for authentication
+- **Error Handling**: Centralized error management with user feedback
 
-#### Core Architecture
-- **Unified Data Management**: Complete mock/API switching system with DataModeContext
-- **Authentication Integration**: JWT token management with automatic session persistence
-- **User Management**: Full CRUD operations with enhanced mock data persistence
-- **Component System**: Comprehensive UI library with consistent design patterns
+### Component Structure
+- **Feature-based Organization**: Components grouped by business domain
+- **Reusable UI Components**: Consistent design system components
+- **Layout Components**: Responsive layout with sidebar navigation
+
+## 📱 Current Features
+
+### ✅ Implemented
+- **Authentication**: JWT-based login with session persistence
+- **User Management**: Complete CRUD operations with advanced filtering
 - **Responsive Design**: Mobile-first approach with adaptive layouts
+- **Component Library**: Comprehensive UI components with consistent styling
+- **Data Management**: Unified system for mock/API data switching
 
-#### User Management System
-- **UnifiedUserList**: Complete user table with real-time switching between mock and API data
-- **Enhanced Mock Data**: Session-persistent operations with localStorage integration
-- **User Operations**: Create, delete, enable/disable with proper error handling
-- **Advanced Features**: Pagination, filtering by name and role, real-time statistics
+### 🚧 In Development
+- **Activities Management**: Activity CRUD operations and scheduling
+- **Advanced Features**: File upload, notifications, and analytics
 
-#### Authentication & Security
-- **JWT Integration**: Complete token management with automatic refresh
-- **Protected Routes**: Secure navigation with authentication guards
-- **Session Persistence**: Maintains authentication across browser sessions
-- **User Context**: Global user state management with useAuth hook
+> **Note**: For detailed development progress and task tracking, see [DEVELOPMENT_STATUS.md](../docs/DEVELOPMENT_STATUS.md)
 
-### ⏳ IMMEDIATE TASKS (1-2 days)
+## 📱 Responsive Design
 
-#### 1. User Edit Form (Critical - Final missing piece)
-```jsx
-// Need to implement: EditUserForm component
-// Location: src/components/users/EditUserForm.jsx
-// Features:
-// - Pre-populate form with existing user data
-// - Validation for all fields (name, email, role)
-// - Handle password updates (optional field)
-// - Integration with PUT /users/{id} endpoint
-// - Proper error handling and success feedback
-```
-
-#### 2. Registration Page
-```jsx
-// Need to implement: Registration page
-// Location: src/pages/auth/Register.jsx
-// Features:
-// - New user registration form
-// - Email validation and uniqueness checking
-// - Password requirements and confirmation
-// - Role selection (if applicable)
-// - Integration with POST /auth/register endpoint
-// - Redirect to login after successful registration
-```
-
-### 🎯 NEXT DEVELOPMENT PHASES
-
-#### Phase 1: Complete User Management (1-2 days)
-- [ ] **User Edit Form**: Complete form implementation with validation
-- [ ] **Registration Page**: New user signup functionality
-- [ ] **User Profile Management**: User settings and profile updates
-- [ ] **Enhanced Validation**: Client-side and server-side validation alignment
-
-#### Phase 2: Activities Management System (3-5 days)
-- [ ] **Activities CRUD**: Create, read, update, delete activities
-- [ ] **Activity Categories**: Category management and filtering
-- [ ] **Scheduling System**: Time slots and availability management
-- [ ] **Capacity Management**: Enrollment limits and waitlists
-- [ ] **Activity Search**: Advanced filtering and search functionality
-
-#### Phase 3: Advanced Features (3-5 days)
-- [ ] **File Upload**: User avatar and activity image uploads
-- [ ] **Real-time Notifications**: Toast notifications for operations
-- [ ] **Advanced Dashboard**: Analytics and reporting widgets
-- [ ] **Dark Mode**: Theme switching functionality
-- [ ] **Accessibility**: Enhanced WCAG compliance
-
-#### Phase 4: Polish & Performance (2-3 days)
-- [ ] **Testing Suite**: Unit tests with React Testing Library
-- [ ] **Performance**: Code splitting and optimization
-- [ ] **Documentation**: Component documentation and guides
-- [ ] **Production Build**: Optimization for deployment
-
----
-
-## 📱 Responsive Breakpoints
-
+### Breakpoints
 - **Mobile**: < 640px
-- **Tablet**: 640px - 1024px
+- **Tablet**: 640px - 1024px  
 - **Desktop**: > 1024px
 
-## 🎯 Next Milestones
+### Features
+- Mobile-first approach
+- Adaptive sidebar navigation
+- Touch-friendly interface
+- Optimized performance across devices
 
-### Phase 1: Core Functionality
-- Complete user management CRUD operations
-- Implement form validation system
-- Add authentication flow
+## 🧪 Development Tools
 
-### Phase 2: Advanced Features
-- Activities management system
-- Real-time notifications
-- Advanced filtering and search
+### Code Quality
+```bash
+npm run lint          # ESLint checks
+npm run lint:fix      # Fix linting issues
+npm run format        # Prettier formatting
+```
 
-### Phase 3: Polish & Performance
-- Dark mode implementation
-- Performance optimizations
-- Comprehensive testing suite
+### Build Analysis
+```bash
+npm run build         # Production build
+npm run preview       # Preview production build
+npm run analyze       # Bundle size analysis
+```
+
+## 📚 Additional Resources
+
+- [Component Documentation](src/pages/DesignSystem.jsx) - Interactive component showcase
+- [Development Status](../docs/DEVELOPMENT_STATUS.md) - Progress tracking and roadmap
+- [API Integration Guide](../docs/API_INTEGRATION.md) - Backend integration details
+- [Deployment Guide](../docs/DEPLOYMENT.md) - Production deployment instructions
