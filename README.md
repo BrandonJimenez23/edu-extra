@@ -12,16 +12,16 @@ EduExtra is a hybrid between an **ERP system** and a **public-facing enrollment 
 
 | 📄 **Section** | 📝 **Description** |
 |----------------|-------------------|
+| [📚 Technical Resources](#-technical-resources) | Development guides and documentation |
 | [🐳 Getting Started](#-getting-started) | Quick setup and installation |
 | [🚀 Features](#-features) | Key platform capabilities |
 | [🧱 Tech Stack](#-tech-stack) | Technologies and architecture |
-| [🏗️ Architecture](#-architecture) | System design and patterns |
 | [📊 Project Status](#-project-status) | Current development state |
-| [🗺️ Roadmap](#-roadmap) | Development phases and future plans |
+| [🗺️ Roadmap](#️-roadmap) | Development phases and future plans |
+| [🏗️ Architecture](#️-architecture) | System design and patterns |
 | [💼 Portfolio Highlights](#-portfolio-highlights) | Key technical achievements |
-| [📚 Technical Documentation](#-technical-documentation) | Development resources and guides |
 
-### 📚 **Technical Resources**
+## 📚 Technical Resources
 
 | 📖 **Resource** | 🎯 **Purpose** |
 |----------------|----------------|
