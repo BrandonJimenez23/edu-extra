@@ -20,9 +20,7 @@ services:
       context: ./backend/eduextra-api
     container_name: eduextra_backend
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/eduextra
-      SPRING_DATASOURCE_USERNAME: eduextra_user
-      SPRING_DATASOURCE_PASSWORD: eduextra_pass
+      SPRING_PROFILES_ACTIVE: docker
     ports:
       - "8080:8080"
     depends_on:
