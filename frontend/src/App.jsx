@@ -1,6 +1,8 @@
 import { BrowserRouter } from 'react-router-dom';
 import { AuthProvider } from './hooks/useAuth';
 import { DataModeProvider } from './contexts/DataModeContext';
+import { NotificationProvider } from './contexts/NotificationContext';
+import { ToastContainer } from './components/ui';
 import AppRoutes from './routes/AppRoutes';
 
 /**
@@ -10,11 +12,16 @@ import AppRoutes from './routes/AppRoutes';
 function App() {
   return (
     <BrowserRouter>
-      <DataModeProvider>
-        <AuthProvider>
-          <AppRoutes />
-        </AuthProvider>
-      </DataModeProvider>
+      <NotificationProvider>
+        <DataModeProvider>
+          <AuthProvider>
+            <AppRoutes />
+          </AuthProvider>
+        </DataModeProvider>
+        
+        {/* Toast container flotando por encima de todo */}
+        <ToastContainer />
+      </NotificationProvider>
     </BrowserRouter>
   );
 }

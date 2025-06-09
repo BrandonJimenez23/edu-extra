@@ -13,27 +13,27 @@ import { USER_ROLES } from './userModels';
 const baseUserSchema = {
   fullName: yup
     .string()
-    .required('El nombre completo es obligatorio')
-    .min(3, 'El nombre debe tener al menos 3 caracteres')
-    .max(100, 'El nombre no puede exceder 100 caracteres')
+    .required('Full name is required')
+    .min(3, 'Name must be at least 3 characters')
+    .max(100, 'Name cannot exceed 100 characters')
     .trim(),
 
   email: yup
     .string()
-    .required('El email es obligatorio')
-    .email('El formato del email no es válido')
+    .required('Email is required')
+    .email('Email format is not valid')
     .trim()
     .lowercase(),
 
   role: yup
     .string()
-    .required('El rol es obligatorio')
-    .oneOf(Object.values(USER_ROLES), 'Rol no válido'),
+    .required('Role is required')
+    .oneOf(Object.values(USER_ROLES), 'Invalid role selected'),
 
   avatarUrl: yup
     .string()
     .nullable()
-    .url('Debe ser una URL válida')
+    .url('Must be a valid URL')
     .trim()
 };
 
@@ -41,15 +41,15 @@ const baseUserSchema = {
 
 const passwordSchema = yup
   .string()
-  .required('La contraseña es obligatoria')
-  .min(6, 'La contraseña debe tener al menos 6 caracteres')
-  .max(100, 'La contraseña no puede exceder 100 caracteres');
+  .required('Password is required')
+  .min(6, 'Password must be at least 6 characters')
+  .max(100, 'Password cannot exceed 100 characters');
 
 const optionalPasswordSchema = yup
   .string()
   .nullable()
-  .min(6, 'La contraseña debe tener al menos 6 caracteres')
-  .max(100, 'La contraseña no puede exceder 100 caracteres');
+  .min(6, 'Password must be at least 6 characters')
+  .max(100, 'Password cannot exceed 100 characters');
 
 // ===== MAIN SCHEMAS =====
 
@@ -64,11 +64,11 @@ export const userCreateSchema = yup.object({
 
 /**
  * Schema for updating existing users
- * Password is optional
+ * Password is optional (not included in form)
  */
 export const userUpdateSchema = yup.object({
-  ...baseUserSchema,
-  password: optionalPasswordSchema
+  ...baseUserSchema
+  // ✅ NO incluir password en modo update
 });
 
 /**
@@ -76,11 +76,24 @@ export const userUpdateSchema = yup.object({
  * Includes conditional password validation based on edit mode
  * @param {boolean} isEditMode - Whether the form is in edit mode
  */
-export const userFormSchema = (isEditMode = false) => yup.object({
-  id: yup.string().nullable(),
-  ...baseUserSchema,
-  password: isEditMode ? optionalPasswordSchema : passwordSchema
-});
+export const userFormSchema = (isEditMode = false) => {
+  console.log('🔥 Creating userFormSchema with isEditMode:', isEditMode);
+  
+  const schema = {
+    id: yup.string().nullable(),
+    ...baseUserSchema
+  };
+  
+  // ✅ SOLO incluir password si NO es modo edición
+  if (!isEditMode) {
+    schema.password = passwordSchema;;
+  } else {;
+  }
+  
+  const finalSchema = yup.object(schema);
+  
+  return finalSchema;
+};
 
 /**
  * Schema for user login
@@ -88,14 +101,14 @@ export const userFormSchema = (isEditMode = false) => yup.object({
 export const userLoginSchema = yup.object({
   email: yup
     .string()
-    .required('El email es obligatorio')
-    .email('El formato del email no es válido')
+    .required('Email is required')
+    .email('Email format is not valid')
     .trim()
     .lowercase(),
 
   password: yup
     .string()
-    .required('La contraseña es obligatoria')
+    .required('Password is required')
 });
 
 /**
@@ -106,8 +119,8 @@ export const userRegisterSchema = yup.object({
   password: passwordSchema,
   confirmPassword: yup
     .string()
-    .required('Confirme la contraseña')
-    .oneOf([yup.ref('password')], 'Las contraseñas no coinciden')
+    .required('Confirm password')
+    .oneOf([yup.ref('password')], 'Passwords do not match')
 });
 
 /**
@@ -116,14 +129,14 @@ export const userRegisterSchema = yup.object({
 export const passwordChangeSchema = yup.object({
   currentPassword: yup
     .string()
-    .required('La contraseña actual es obligatoria'),
+    .required('Current password is required'),
 
   newPassword: passwordSchema,
 
   confirmNewPassword: yup
     .string()
-    .required('Confirme la nueva contraseña')
-    .oneOf([yup.ref('newPassword')], 'Las contraseñas no coinciden')
+    .required('Confirm new password')
+    .oneOf([yup.ref('newPassword')], 'Passwords do not match')
 });
 
 /**
@@ -132,14 +145,14 @@ export const passwordChangeSchema = yup.object({
 export const emailUpdateSchema = yup.object({
   email: yup
     .string()
-    .required('El nuevo email es obligatorio')
-    .email('El formato del email no es válido')
+    .required('New email is required')
+    .email('Email format is not valid')
     .trim()
     .lowercase(),
 
   password: yup
     .string()
-    .required('La contraseña es obligatoria para cambiar el email')
+    .required('Password is required to change email')
 });
 
 /**
@@ -221,16 +234,17 @@ export const validateField = async (fieldName, value, schema, context = {}) => {
 /**
  * Get schema based on operation type
  * @param {string} operation - Type of operation ('create', 'update', 'form', etc.)
+ * @param {boolean} isEditMode - For form operations, whether in edit mode
  * @returns {Object} Yup schema
  */
-export const getUserSchema = (operation) => {
+export const getUserSchema = (operation, isEditMode = false) => {
   switch (operation) {
     case 'create':
       return userCreateSchema;
     case 'update':
       return userUpdateSchema;
     case 'form':
-      return userFormSchema;
+      return userFormSchema(isEditMode);
     case 'login':
       return userLoginSchema;
     case 'register':
@@ -242,6 +256,6 @@ export const getUserSchema = (operation) => {
     case 'profile':
       return userProfileSchema;
     default:
-      return userFormSchema;
+      return userFormSchema(isEditMode);
   }
 };

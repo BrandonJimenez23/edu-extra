@@ -11,7 +11,7 @@ import { Button } from "../../../components/ui";
  * Features a clean, professional layout with navigation and clear instructions.
  */
 export default function CreateUser() {
-    const { createUser } = useUsers();
+    const { createUser, loading } = useUsers(); // ✅ Add loading state
     const navigate = useNavigate();
 
     // Handle successful user creation
@@ -24,6 +24,11 @@ export default function CreateUser() {
             console.error('Failed to create user:', error);
             // Error is already handled by the hook
         }
+    };
+
+    // Handle form cancellation
+    const handleCancel = () => {
+        navigate('/users');
     };
 
     return (
@@ -57,6 +62,8 @@ export default function CreateUser() {
             <UserForm 
                 isEditMode={false} 
                 onSubmit={handleUserCreated}
+                onCancel={handleCancel}
+                loading={loading}
             />
 
             {/* Help Text */}

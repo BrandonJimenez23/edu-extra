@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Menu, Bell } from 'lucide-react';
 import SearchInput from './SearchInput';
 import UserMenu from './UserMenu';
+import { DataModeSwitchCompact } from '../../components/ui';
 
 export default function TopBar({ 
   title = "Panel de administración", 
@@ -47,6 +48,11 @@ export default function TopBar({
             onSearch={handleSearch}
             placeholder="Buscar en EduExtra..."
           />
+
+          {/* Data Mode Switch */}
+          {!showMenuButton && (
+            <DataModeSwitchCompact className="" />
+          )}
 
           {/* Notificaciones */}
           <button

@@ -10,6 +10,7 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { Logo } from '../../components/ui/Logo';
+import { DataModeSwitchVertical } from '../../components/ui';
 
 const navigationItems = [
   { href: '/', label: 'Dashboard', icon: BarChart3 },
@@ -100,7 +101,12 @@ export default function Sidebar({ isCollapsed = false, onToggle, isMobile = fals
         </nav>
 
         {/* Footer */}
-        <div className="absolute bottom-4 left-0 right-0 px-4">
+        <div className="absolute bottom-4 left-0 right-0 px-4 space-y-3">
+          {/* Data Mode Switch - Solo visible cuando no está colapsado */}
+          {(isMobile) && (
+            <DataModeSwitchVertical className="mx-auto" />
+          )}
+
           <div className={`
             p-3 bg-blue-ribbon-400/30 rounded-lg text-center
             ${isCollapsed && !isMobile ? 'px-2' : 'px-3'}

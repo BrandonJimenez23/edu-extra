@@ -1,43 +1,45 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Card, Button, Switch } from '../components/ui';
+import { Card, Button } from '../components/ui';
 import { BarChart3, Users, ClipboardList, TrendingUp, Database, TestTube, UserPlus } from 'lucide-react';
 import { mockStats } from '../data/mockData';
 import { useDataMode } from '../hooks/useDataMode';
-import useUsersEnhanced from '../hooks/useUsersEnhanced';
+import useUsers from '../hooks/useUsers';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { useMockData, toggleDataMode, currentMode } = useDataMode();
-  const { getUserStats, fetchUsers } = useUsersEnhanced();
-  const [realStats, setRealStats] = useState(null);
+  const { useMockData, currentMode } = useDataMode();
+  const { getUserStats, fetchUsers, loading } = useUsers();
+  const [userStats, setUserStats] = useState(null);
+  const [isStatsLoaded, setIsStatsLoaded] = useState(false);
 
-  // Load real statistics when not using mock data
+  // Load statistics when component mounts or data mode changes
+  const loadStats = useCallback(async () => {
+    try {
+      setIsStatsLoaded(false);
+      await fetchUsers(); // This automatically uses the correct data source
+      const stats = getUserStats();
+      setUserStats(stats);
+      setIsStatsLoaded(true);
+    } catch (error) {
+      console.error('Failed to load statistics:', error);
+      setIsStatsLoaded(true);
+    }
+  }, [fetchUsers, getUserStats]);
+
   useEffect(() => {
-    const loadRealStats = async () => {
-      if (!useMockData) {
-        try {
-          await fetchUsers();
-          const stats = getUserStats();
-          setRealStats(stats);
-        } catch (error) {
-          console.error('Failed to load user statistics:', error);
-        }
-      }
-    };
+    loadStats();
+  }, [useMockData]); // ✅ Solo useMockData para evitar bucle infinito
 
-    loadRealStats();
-  }, [useMockData, fetchUsers, getUserStats]);
-
-  // Use appropriate data source
+  // Use appropriate data source for dashboard stats
   const currentStats = useMockData ? {
     totalUsers: mockStats.totalUsers,
     activeUsers: mockStats.activeUsers,
     totalActivities: mockStats.totalActivities,
     monthlyGrowth: mockStats.monthlyGrowth
   } : {
-    totalUsers: realStats?.total || 0,
-    activeUsers: realStats?.active || 0,
+    totalUsers: userStats?.total || 0,
+    activeUsers: userStats?.active || 0,
     totalActivities: 0, // This would come from activities API
     monthlyGrowth: 0 // This would be calculated from real data
   };
@@ -59,7 +61,7 @@ export default function Dashboard() {
     },
     {
       title: 'Total Actividades',
-      value: currentStats.totalActivities,
+      value: currentStats.totalActividades || currentStats.totalActivities,
       icon: ClipboardList,
       change: '+5%',
       positive: true
@@ -75,35 +77,14 @@ export default function Dashboard() {
 
   return (
     <div className="space-y-6">
-      {/* Header with Data Mode Toggle */}
-      <div className="flex justify-between items-start">
-        <div className="bg-gradient-to-r from-blue-ribbon-500 to-blue-ribbon-600 rounded-lg p-6 text-white flex-1 mr-6">
-          <h1 className="text-2xl font-heading font-bold mb-2">
-            Bienvenido a EduExtra
-          </h1>
-          <p className="text-blue-ribbon-100">
-            Gestiona actividades extracurriculares de manera efectiva
-          </p>
-        </div>
-
-        {/* Data Mode Toggle */}
-        <div className="flex items-center gap-3 p-3 bg-white rounded-lg border shadow-sm">
-          <div className="flex items-center gap-2">
-            <Database className="h-4 w-4 text-blue-600" />
-            <span className="text-sm font-medium text-gray-700">API</span>
-          </div>
-          
-          <Switch
-            checked={useMockData}
-            onCheckedChange={toggleDataMode}
-            label=""
-          />
-          
-          <div className="flex items-center gap-2">
-            <TestTube className="h-4 w-4 text-purple-600" />
-            <span className="text-sm font-medium text-gray-700">Mock</span>
-          </div>
-        </div>
+      {/* Header simplificado */}
+      <div className="bg-gradient-to-r from-blue-ribbon-500 to-blue-ribbon-600 rounded-lg p-6 text-white">
+        <h1 className="text-2xl font-heading font-bold mb-2">
+          Bienvenido a EduExtra
+        </h1>
+        <p className="text-blue-ribbon-100">
+          Gestiona actividades extracurriculares de manera efectiva
+        </p>
       </div>
 
       {/* Current Mode Indicator */}
@@ -129,6 +110,9 @@ export default function Dashboard() {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => {
           const IconComponent = stat.icon;
+          const isUserStat = index < 2; // First two stats are user-related
+          const showLoading = (loading || !isStatsLoaded) && !useMockData && isUserStat;
+          
           return (
             <Card key={index} className="p-6">
               <div className="flex items-center justify-between">
@@ -136,9 +120,16 @@ export default function Dashboard() {
                   <p className="text-sm font-medium text-gray-600 mb-1">
                     {stat.title}
                   </p>
-                  <p className="text-2xl font-heading font-bold text-gray-900">
-                    {stat.value}
-                  </p>
+                  {showLoading ? (
+                    <div className="flex items-center gap-2">
+                      <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-600 border-t-transparent"></div>
+                      <span className="text-sm text-gray-500">Loading...</span>
+                    </div>
+                  ) : (
+                    <p className="text-2xl font-heading font-bold text-gray-900">
+                      {stat.value}
+                    </p>
+                  )}
                   <p className={`text-sm ${stat.positive ? 'text-emerald-600' : 'text-coral-red-600'}`}>
                     {stat.change} desde el mes pasado
                   </p>
@@ -158,7 +149,6 @@ export default function Dashboard() {
           <h3 className="text-lg font-heading font-semibold text-gray-900 mb-4">
             Acciones Rápidas
           </h3>
-          {/* Quick Actions */}
           <div className="space-y-3">
             <Button 
               variant="primary" 

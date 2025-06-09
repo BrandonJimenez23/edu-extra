@@ -12,6 +12,7 @@ import Activities from '../pages/Activities';
 import ComponentLibrary from '../pages/ComponentLibrary';
 import UserForm from '../features/users/components/UserForm';
 import CreateUser from '../features/users/pages/CreateUser';
+import EditUser from '../features/users/pages/EditUser';
 
 // Layout wrapper for pages that need the main layout
 const LayoutRoute = ({ children, pageTitle }) => (
@@ -73,6 +74,17 @@ export default function AppRoutes() {
           <ProtectedRoute requiredRoles={['ADMIN']}>
             <LayoutRoute pageTitle="Create User">
               <CreateUser />
+            </LayoutRoute>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route 
+        path="/users/:userId/edit" 
+        element={
+          <ProtectedRoute requiredRoles={['ADMIN']}>
+            <LayoutRoute pageTitle="Edit User">
+              <EditUser />
             </LayoutRoute>
           </ProtectedRoute>
         }

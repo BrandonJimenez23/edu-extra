@@ -16,3 +16,27 @@ body {
 :root {
   --header-height: 64px;
 }
+
+/* Toast progress bar animation */
+@keyframes toast-progress {
+    from {
+        width: 100%;
+    }
+    to {
+        width: 0%;
+    }
+}
+
+/* Staggered animation delays */
+.animation-delay-0 {
+    animation-delay: 0ms;
+}
+.animation-delay-100 {
+    animation-delay: 100ms;
+}
+.animation-delay-200 {
+    animation-delay: 200ms;
+}
+.animation-delay-300 {
+    animation-delay: 300ms;
+}

@@ -7,7 +7,7 @@ import { Card, Button, Badge, Avatar, Switch } from '../components/ui';
 import Table from '../components/layouts/Table';
 
 // Hooks and Context
-import useUsersEnhanced from '../hooks/useUsersEnhanced';
+import useUsers from '../hooks/useUsers';
 import { useDataMode } from '../hooks/useDataMode';
 
 // Utils
@@ -45,7 +45,7 @@ export default function UnifiedUserList() {
     enableUser,
     disableUser,
     clearError
-  } = useUsersEnhanced();
+  } = useUsers();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [roleFilter, setRoleFilter] = useState('');
@@ -83,6 +83,7 @@ export default function UnifiedUserList() {
   const handleEditUser = (user) => {
     navigate(`/users/${user.id}/edit`);
   };
+  
 
   const handleDeleteUser = async (user) => {
     if (window.confirm(`Are you sure you want to delete ${user.displayName}?`)) {
@@ -103,7 +104,6 @@ export default function UnifiedUserList() {
       } else {
         await enableUser(user.id);
       }
-      // Refresh users list
       await fetchUsers({ search: searchTerm, role: roleFilter });
     } catch (error) {
       console.error('Failed to toggle user status:', error);
